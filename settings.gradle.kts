@@ -1,4 +1,4 @@
-rootProject.name = "GradleKotlinTemplate"
-// 你可以修改此名称作为项目名称
-include("template")
-
+rootProject.name = "LightDB"
+include("db-api")
+include("db-jedis")
+include("db-memory")
