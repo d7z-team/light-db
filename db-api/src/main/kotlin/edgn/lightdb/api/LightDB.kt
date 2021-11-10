@@ -7,7 +7,12 @@ import edgn.lightdb.api.trees.set.LightSetDB
 /**
  * LightDB 管理
  */
-interface LightDB {
+interface LightDB <CFG : ILightDBConfig> {
+    /**
+     * 此 LightDB 配置
+     */
+    fun config(): ILightDBConfig
+
     /**
      * Map 相关
      */

@@ -1,5 +1,3 @@
 package edgn.lightdb.api.trees.set
 
-interface LightSet{
-
-}
+interface LightSet<V : Any> : MutableSet<V>

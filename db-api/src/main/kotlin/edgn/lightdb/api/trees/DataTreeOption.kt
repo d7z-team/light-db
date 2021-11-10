@@ -4,12 +4,13 @@ import java.util.Optional
 import kotlin.reflect.KClass
 
 /**
- * 各个模块必备函数
+ * 各个模块基础函数
  */
 interface DataTreeOption {
     /**
      *
-     * 根据 key 获取实例.如果实例不存在则返回空串
+     * 根据 key 获取实例.如果实例不存在则返回空串，
+     * 注意，所有相同 key 返回的均为同一对象的引用
      *
      * @param key String key
      * @param wrap KClass<V> 对应实例的值对象类型
@@ -31,7 +32,8 @@ interface DataTreeOption {
 
     /**
      * 销毁实例本身，如果实例不存在则返回false
-     * 注意，销毁后所有与此 key 相关的实例均会失效且抛出异常
+     * 注意，销毁后所有与此 key 相关的实例均会失效且抛出异常,
+     *
      */
     fun drop(key: String): Boolean
 

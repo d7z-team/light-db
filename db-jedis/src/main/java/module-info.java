@@ -1,6 +1,4 @@
-module gradle.kotlin.template {
+module edgn.lightdb.jedis {
     requires kotlin.reflect;
     requires kotlin.stdlib;
-    opens com.github.template;
-    exports com.github.template;
 }
