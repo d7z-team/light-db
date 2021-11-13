@@ -14,17 +14,17 @@ interface LightDB<CFG : LightDBConfig> {
     val config: CFG
 
     /**
-     * Map 相关
+     * Map 相关操作
      */
     fun withMap(name: String = "_default"): LightMapOption
 
     /**
-     * List 相关
+     * List 相关操作
      */
     fun withList(name: String = "_default"): LightListOption
 
     /**
-     * Set 相关
+     * Set 相关操作
      */
     fun withSet(name: String = "_default"): LightSetOption
 }
