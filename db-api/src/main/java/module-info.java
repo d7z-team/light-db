@@ -8,12 +8,12 @@ module edgn.lightdb.api {
     exports edgn.lightdb.api;
     opens edgn.lightdb.api.format;
     exports edgn.lightdb.api.format;
-    opens edgn.lightdb.api.trees;
-    exports edgn.lightdb.api.trees;
-    opens edgn.lightdb.api.trees.list;
-    exports edgn.lightdb.api.trees.list;
-    opens edgn.lightdb.api.trees.set;
-    exports edgn.lightdb.api.trees.set;
-    opens edgn.lightdb.api.trees.map;
-    exports edgn.lightdb.api.trees.map;
+    opens edgn.lightdb.api.tables;
+    exports edgn.lightdb.api.tables;
+    opens edgn.lightdb.api.tables.list;
+    exports edgn.lightdb.api.tables.list;
+    opens edgn.lightdb.api.tables.set;
+    exports edgn.lightdb.api.tables.set;
+    opens edgn.lightdb.api.tables.map;
+    exports edgn.lightdb.api.tables.map;
 }

@@ -1,5 +1,5 @@
 package edgn.lightdb.memory
 
-import edgn.lightdb.utils.config.LightDBConfig
+import edgn.lightdb.utils.config.SimpleLightDBConfig
 
-class MemoryConfig : LightDBConfig()
+class MemoryConfig : SimpleLightDBConfig()

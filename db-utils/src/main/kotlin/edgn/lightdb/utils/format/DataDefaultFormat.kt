@@ -1,9 +1,9 @@
 package edgn.lightdb.utils.format
 
-import edgn.lightdb.api.format.IDataDefaultFormat
+import edgn.lightdb.api.format.IDataFormat
 import kotlin.reflect.KClass
 
-class DataDefaultFormat : IDataDefaultFormat {
+class DataDefaultFormat : IDataFormat {
     override fun <T : Any> format(data: T, clazz: KClass<T>): String {
         TODO("Not yet implemented")
     }
