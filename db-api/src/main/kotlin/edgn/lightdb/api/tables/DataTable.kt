@@ -36,10 +36,15 @@ interface DataTable<V : Any> {
      *注意：当剩余小于 0 则表示此实例已过期，
      * 但请注意,等于0不一定是过期，可能是数值过小导致精度丢失
      */
-    fun expire(unit: TimeUnit = TimeUnit.MILLISECONDS): Long
+    fun expire(unit: TimeUnit = TimeUnit.SECONDS): Long
 
     /**
      * 设置实例过期时间，当实例已过期或销毁时，此方法将出现异常
      */
     fun expire(timeout: Long, unit: TimeUnit)
+
+    /**
+     * 取消过期时间 (配置永不过期)
+     */
+    fun clearExpire()
 }

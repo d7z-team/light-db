@@ -8,6 +8,11 @@ import kotlin.reflect.KClass
  */
 interface DataOption<TAB : DataTable<*>> {
     /**
+     * 管理此命名空间相关的配置
+     */
+    val config: DataConfig<out TAB>
+
+    /**
      *
      * 根据 key 获取实例.
      * 如果实例不存在则返回空串

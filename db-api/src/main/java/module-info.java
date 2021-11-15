@@ -6,8 +6,6 @@ module edgn.lightdb.api {
     uses LightDB;
     opens edgn.lightdb.api;
     exports edgn.lightdb.api;
-    opens edgn.lightdb.api.format;
-    exports edgn.lightdb.api.format;
     opens edgn.lightdb.api.tables;
     exports edgn.lightdb.api.tables;
     opens edgn.lightdb.api.tables.list;
