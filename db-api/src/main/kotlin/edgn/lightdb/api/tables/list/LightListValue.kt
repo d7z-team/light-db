@@ -68,38 +68,6 @@ interface LightListValue<V : Any> : DataValue<V> {
     /**
      * 数据迭代器
      *
-     * 注意，如果数据长度发生不可预知的变化时将触发迭代错误
-     *
      */
-    fun values(): MutableIterator<V>
-
-    class LightListValueMutableIterator<V : Any>(
-        private val data: LightListValue<V>,
-        private var size: Long
-    ) : MutableIterator<V> {
-        private var index = 0
-
-        private fun checkError() {
-            if (size != data.size) {
-                throw NoSuchElementException("此数据发生变更，迭代失败.")
-            }
-        }
-
-        override fun hasNext(): Boolean {
-            checkError()
-            return index < data.size - 1
-        }
-
-        override fun next(): V {
-            checkError()
-            return data.get(index++.toLong()).get()
-        }
-
-        override fun remove() {
-            checkError()
-            index--
-            size--
-            data.remove(index.toLong())
-        }
-    }
+    fun values(): Iterator<V>
 }

@@ -27,9 +27,9 @@ interface LightMapValue<V : Any> : DataValue<V> {
      *
      * @param key String 键
      * @param value V 数据
-     * @return Optional<V> 如果数据已存在则返回旧的数据，否则返回NULL
+     * @return Optional<V> 如果数据已存在则返回旧的数据，否则返回当前数据
      */
-    fun putIfAbsent(key: String, value: V): Optional<V>
+    fun putIfAbsent(key: String, value: V): V
 
     /**
      * 如果映射包含指定的键，则返回true
@@ -49,5 +49,5 @@ interface LightMapValue<V : Any> : DataValue<V> {
      * 注意，如果数据长度发生变化将触发迭代错误
      *
      */
-    fun keys(): MutableIterator<String>
+    fun keys(): Iterator<String>
 }

@@ -5,6 +5,8 @@ import edgn.lightdb.api.tables.list.LightListOption
 import edgn.lightdb.api.tables.map.LightMapOption
 import edgn.lightdb.api.tables.set.LightSetOption
 import edgn.lightdb.memory.internal.impl.list.MListOption
+import edgn.lightdb.memory.internal.impl.map.MMapOption
+import edgn.lightdb.memory.internal.impl.set.MSetOption
 import edgn.lightdb.memory.internal.refresh.DataRefresh
 import edgn.lightdb.memory.internal.universal.MemoryDataConfig
 import edgn.lightdb.memory.internal.universal.MemoryDataTable
@@ -15,6 +17,8 @@ class MemoryLightDB @JvmOverloads constructor(
 ) :
     LightDB<MemoryDataConfig<MemoryDataTable<Any>>>, DataRefresh {
     private val listNamespace = ConcurrentHashMap<String, MListOption>()
+    private val mapNamespace = ConcurrentHashMap<String, MMapOption>()
+    private val setNamespace = ConcurrentHashMap<String, MSetOption>()
 
     override fun withList(name: String): LightListOption {
         return listNamespace.getOrPut(key = name) {
@@ -23,14 +27,20 @@ class MemoryLightDB @JvmOverloads constructor(
     }
 
     override fun withMap(name: String): LightMapOption {
-        TODO("Not yet implemented")
+        return mapNamespace.getOrPut(key = name) {
+            MMapOption(config)
+        }
     }
 
     override fun withSet(name: String): LightSetOption {
-        TODO("Not yet implemented")
+        return setNamespace.getOrPut(key = name) {
+            MSetOption(config)
+        }
     }
 
     override fun refresh() {
         listNamespace.forEach { (_, u) -> u.refresh() }
+        mapNamespace.forEach { (_, u) -> u.refresh() }
+        setNamespace.forEach { (_, u) -> u.refresh() }
     }
 }

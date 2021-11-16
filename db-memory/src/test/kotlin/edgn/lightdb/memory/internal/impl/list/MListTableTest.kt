@@ -46,12 +46,4 @@ internal class MListTableTest {
     @Test
     fun delete() {
     }
-
-    @Test
-    fun getKey() {
-    }
-
-    @Test
-    fun getClazz() {
-    }
 }

@@ -48,6 +48,8 @@ abstract class MemoryDataTable<T : Any> : DataTable<T> {
         }
     }
 
+    abstract fun delete()
+
     private val utcDate: Long
         get() = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
 }

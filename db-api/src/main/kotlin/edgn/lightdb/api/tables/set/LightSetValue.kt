@@ -6,7 +6,7 @@ interface LightSetValue<V : Any> : DataValue<V> {
     /**
      * 添加数据
      */
-    fun add(data: V)
+    fun add(data: V): Boolean
 
     /**
      * 移除数据
@@ -21,8 +21,7 @@ interface LightSetValue<V : Any> : DataValue<V> {
     /**
      * 数据迭代器
      *
-     * 注意，如果数据长度发生变化将触发迭代错误
      *
      */
-    fun values(): MutableIterator<V>
+    fun values(): Iterator<V>
 }

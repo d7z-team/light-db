@@ -51,7 +51,20 @@ class MListValue<V : Any>(private val table: MListTable<V>) : LightListValue<V> 
         table.data.lastIndexOf(element).toLong()
     }
 
-    override fun values(): MutableIterator<V> = table.checkDestroy {
-        LightListValue.LightListValueMutableIterator(this, size)
+    override fun values(): Iterator<V> = table.checkDestroy {
+        MListIterator(this)
+    }
+
+    class MListIterator<V : Any>(
+        private val data: MListValue<V>,
+    ) : Iterator<V> {
+        private val iterator = data.table.data.iterator()
+        override fun hasNext() = data.table.checkDestroy {
+            iterator.hasNext()
+        }
+
+        override fun next(): V = data.table.checkDestroy {
+            iterator.next()
+        }
     }
 }
