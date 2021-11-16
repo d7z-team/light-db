@@ -22,7 +22,7 @@ class MSetTable<V : Any>(
     override val available: Boolean
         get() = expired.not() && delete.get().not()
 
-    override fun get(): Optional<MSetValue<V>> {
+    override fun items(): Optional<MSetValue<V>> {
         return if (available) {
             Optional.of(listValue)
         } else {

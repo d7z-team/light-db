@@ -22,7 +22,7 @@ class MMapTable<V : Any>(
     override val available: Boolean
         get() = expired.not() && delete.get().not()
 
-    override fun get(): Optional<MMapValue<V>> {
+    override fun items(): Optional<MMapValue<V>> {
         return if (available) {
             Optional.of(listValue)
         } else {

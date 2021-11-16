@@ -28,7 +28,7 @@ interface DataTable<V : Any> {
     /**
      * 获取实例，如果实例已过期或销毁则返回 NULL
      */
-    fun get(): Optional<out DataValue<V>>
+    fun items(): Optional<out DataValue<V>>
 
     /**
      * 获取过期时间

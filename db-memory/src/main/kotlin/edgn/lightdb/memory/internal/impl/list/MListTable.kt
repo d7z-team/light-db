@@ -22,7 +22,7 @@ class MListTable<V : Any>(
     override val available: Boolean
         get() = expired.not() && delete.get().not()
 
-    override fun get(): Optional<MListValue<V>> {
+    override fun items(): Optional<MListValue<V>> {
         return if (available) {
             Optional.of(listValue)
         } else {

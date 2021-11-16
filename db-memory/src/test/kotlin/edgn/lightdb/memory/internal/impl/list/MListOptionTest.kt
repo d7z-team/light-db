@@ -29,7 +29,7 @@ internal class MListOptionTest {
         val mListOption = MListOption(MemoryDataConfig())
         assertFalse(mListOption.drop("test.a", TestDataA::class))
         val createDataA = mListOption.getOrCreate("test.a", TestDataA::class)
-        createDataA.get().get().add(TestDataA("TEST"))
+        createDataA.items().get().add(TestDataA("TEST"))
         assertTrue(mListOption.drop("test.a", TestDataA::class))
         assertFalse(mListOption.drop("test.a", TestDataA::class))
     }
