@@ -8,7 +8,6 @@ import edgn.lightdb.memory.internal.impl.list.MListOption
 import edgn.lightdb.memory.internal.impl.map.MMapOption
 import edgn.lightdb.memory.internal.impl.set.MSetOption
 import edgn.lightdb.memory.internal.refresh.DataRefresh
-import edgn.lightdb.memory.internal.universal.MemoryDataConfig
 import edgn.lightdb.memory.internal.universal.MemoryDataTable
 import java.util.concurrent.ConcurrentHashMap
 

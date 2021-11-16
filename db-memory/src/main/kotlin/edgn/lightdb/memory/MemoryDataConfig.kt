@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal.universal
+package edgn.lightdb.memory
 
 import edgn.lightdb.api.tables.DataConfig
 import edgn.lightdb.api.tables.DataTable

@@ -66,6 +66,11 @@ interface LightListValue<V : Any> : DataValue<V> {
     fun lastIndexOf(element: V): Long
 
     /**
+     * 排序List
+     */
+    fun sortWith(comparator: Comparator<V>)
+
+    /**
      * 数据迭代器
      *
      */

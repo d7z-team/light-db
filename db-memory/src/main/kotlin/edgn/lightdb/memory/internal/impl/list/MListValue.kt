@@ -51,6 +51,10 @@ class MListValue<V : Any>(private val table: MListTable<V>) : LightListValue<V> 
         table.data.lastIndexOf(element).toLong()
     }
 
+    override fun sortWith(comparator: Comparator<V>) = table.checkDestroy {
+        table.data.sortWith(comparator)
+    }
+
     override fun values(): Iterator<V> = table.checkDestroy {
         MListIterator(this)
     }

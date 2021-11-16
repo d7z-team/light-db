@@ -15,6 +15,8 @@ java {
 }
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("redis.clients:jedis:3.7.0")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation(project(":db-api"))

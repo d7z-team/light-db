@@ -2,8 +2,8 @@ package edgn.lightdb.memory.internal.impl.map
 
 import edgn.lightdb.api.DestroyException
 import edgn.lightdb.api.tables.map.LightMapOption
+import edgn.lightdb.memory.MemoryDataConfig
 import edgn.lightdb.memory.internal.refresh.DataRefresh
-import edgn.lightdb.memory.internal.universal.MemoryDataConfig
 import edgn.lightdb.memory.internal.universal.MemoryDataTable
 import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
