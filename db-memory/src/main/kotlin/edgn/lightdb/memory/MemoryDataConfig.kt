@@ -8,6 +8,11 @@ class MemoryDataConfig<TAB : DataTable<*>> : DataConfig<TAB> {
     private var currentTimeOut: Long
     private var currentTimeOutUnit: TimeUnit
 
+    /**
+     * 自动刷新去除历史消息
+     */
+    var autoRefresh: Boolean = true
+
     constructor() {
         currentTimeOut = Long.MAX_VALUE
         currentTimeOutUnit = TimeUnit.SECONDS

@@ -5,11 +5,12 @@ import edgn.lightdb.api.tables.map.LightMapOption
 import edgn.lightdb.memory.MemoryDataConfig
 import edgn.lightdb.memory.internal.refresh.DataRefresh
 import edgn.lightdb.memory.internal.universal.MemoryDataTable
+import java.io.Closeable
 import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
-class MMapOption(config: MemoryDataConfig<MemoryDataTable<Any>>) : LightMapOption, DataRefresh {
+class MMapOption(config: MemoryDataConfig<MemoryDataTable<Any>>) : LightMapOption, DataRefresh, Closeable {
     override val config = MemoryDataConfig<MMapTable<*>>(config)
 
     private val trees = ConcurrentHashMap<String, MMapTable<*>>()
@@ -63,5 +64,12 @@ class MMapOption(config: MemoryDataConfig<MemoryDataTable<Any>>) : LightMapOptio
             .map { it.key }.forEach {
                 trees.remove(it)
             }
+    }
+
+    override fun close() {
+        trees.forEach { (_, u) ->
+            u.delete()
+        }
+        trees.clear()
     }
 }

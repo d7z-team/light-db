@@ -3,11 +3,12 @@ package edgn.lightdb.api
 import edgn.lightdb.api.tables.list.LightListOption
 import edgn.lightdb.api.tables.map.LightMapOption
 import edgn.lightdb.api.tables.set.LightSetOption
+import java.io.Closeable
 
 /**
  * LightDB 主体
  */
-interface LightDB<CFG : LightDBConfig> {
+interface LightDB<CFG : LightDBConfig> : Closeable {
     /**
      * 此 LightDB 配置
      */
