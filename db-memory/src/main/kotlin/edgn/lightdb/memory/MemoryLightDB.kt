@@ -7,8 +7,7 @@ import edgn.lightdb.api.tables.set.LightSetOption
 import edgn.lightdb.memory.internal.impl.list.MListOption
 import edgn.lightdb.memory.internal.impl.map.MMapOption
 import edgn.lightdb.memory.internal.impl.set.MSetOption
-import edgn.lightdb.memory.internal.refresh.DataRefresh
-import edgn.lightdb.memory.internal.universal.MemoryDataTable
+import edgn.lightdb.memory.internal.universal.DataRefresh
 import java.util.Timer
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -18,9 +17,9 @@ import kotlin.concurrent.timerTask
  * LightDB 内存实现,仅作为默认测试使用，切勿用于生产环境
  */
 class MemoryLightDB @JvmOverloads constructor(
-    override val config: MemoryDataConfig<MemoryDataTable<Any>> = MemoryDataConfig()
+    override val config: MemoryDataConfig = MemoryDataConfig()
 ) :
-    LightDB<MemoryDataConfig<MemoryDataTable<Any>>>, DataRefresh {
+    LightDB<MemoryDataConfig>, DataRefresh {
     private val timer = Timer()
     private val closed = AtomicBoolean(false)
 
@@ -78,7 +77,9 @@ class MemoryLightDB @JvmOverloads constructor(
         if (closed.get()) {
             return
         }
-        closed.weakCompareAndSetAcquire(false, true)
+        if (closed.weakCompareAndSetAcquire(false, true).not()) {
+            return
+        }
         timer.cancel()
         listNamespace.forEach { (_, u) -> u.close() } // TODO: 存在线程安全问题
         mapNamespace.forEach { (_, u) -> u.close() }

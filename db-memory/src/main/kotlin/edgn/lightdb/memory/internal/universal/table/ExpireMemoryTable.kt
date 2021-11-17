@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal.universal
+package edgn.lightdb.memory.internal.universal.table
 
 import edgn.lightdb.api.DestroyException
 import edgn.lightdb.api.tables.DataTable
@@ -7,7 +7,10 @@ import java.time.ZoneOffset
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 
-abstract class MemoryDataTable<T : Any> : DataTable<T> {
+/**
+ * 过期相关实现
+ */
+abstract class ExpireMemoryTable<T : Any> : DataTable<T> {
     /**
      * 内部计时器 ,此值代表过期时间 (目标秒) ,如果为 -1 则表示永不过期
      */

@@ -4,7 +4,7 @@ import edgn.lightdb.api.tables.DataConfig
 import edgn.lightdb.api.tables.DataTable
 import java.util.concurrent.TimeUnit
 
-class MemoryDataConfig<TAB : DataTable<*>> : DataConfig<TAB> {
+class MemoryDataConfig : DataConfig {
     private var currentTimeOut: Long
     private var currentTimeOutUnit: TimeUnit
 
@@ -18,12 +18,12 @@ class MemoryDataConfig<TAB : DataTable<*>> : DataConfig<TAB> {
         currentTimeOutUnit = TimeUnit.SECONDS
     }
 
-    constructor(parent: MemoryDataConfig<*>) {
+    constructor(parent: MemoryDataConfig) {
         currentTimeOut = parent.currentTimeOut
         currentTimeOutUnit = parent.currentTimeOutUnit
     }
 
-    fun createHook(data: TAB) {
+    fun createHook(data: DataTable<*>) {
         data.expire(currentTimeOut, currentTimeOutUnit)
     }
 

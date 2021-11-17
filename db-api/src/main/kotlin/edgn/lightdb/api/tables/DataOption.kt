@@ -6,11 +6,11 @@ import kotlin.reflect.KClass
 /**
  * 各个模块基础函数
  */
-interface DataOption<TAB : DataTable<*>> {
+interface DataOption {
     /**
      * 管理此命名空间相关的配置
      */
-    val config: DataConfig<out TAB>
+    val config: DataConfig
 
     /**
      *
@@ -22,7 +22,7 @@ interface DataOption<TAB : DataTable<*>> {
      * @param wrap KClass<V> 对应实例的值对象类型
      * @return Optional<DataTree<V>> 实例的包装
      */
-    fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out TAB>
+    fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out DataTable<V>>
 
     /**
      * 根据 key 创建实例
@@ -37,7 +37,7 @@ interface DataOption<TAB : DataTable<*>> {
     fun <V : Any> getOrCreate(
         key: String,
         wrap: KClass<V>
-    ): TAB
+    ): DataTable<V>
 
     /**
      * 根据key销毁实例

@@ -1,75 +1,45 @@
 package edgn.lightdb.memory.internal.impl.set
 
-import edgn.lightdb.api.DestroyException
+import edgn.lightdb.api.tables.DataConfig
 import edgn.lightdb.api.tables.set.LightSetOption
+import edgn.lightdb.api.tables.set.LightSetTable
 import edgn.lightdb.memory.MemoryDataConfig
-import edgn.lightdb.memory.internal.refresh.DataRefresh
-import edgn.lightdb.memory.internal.universal.MemoryDataTable
+import edgn.lightdb.memory.internal.universal.DataRefresh
+import edgn.lightdb.memory.internal.universal.MemoryOption
+import edgn.lightdb.memory.internal.universal.TableCreate
+import edgn.lightdb.memory.internal.universal.table.EmptyMemoryTable
 import java.io.Closeable
 import java.util.Optional
-import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
-class MSetOption(config: MemoryDataConfig<MemoryDataTable<Any>>) : LightSetOption, DataRefresh, Closeable {
-    override val config = MemoryDataConfig<MSetTable<*>>(config)
-
-    private val trees = ConcurrentHashMap<String, MSetTable<*>>()
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<MSetTable<V>> {
-        return Optional.ofNullable(trees[genKey(key, wrap)])
-            .filter { it.clazz == wrap }
-            .filter { it.available }
-            as Optional<MSetTable<V>>
-    }
-
-    private fun genKey(key: String, wrap: KClass<*>): String {
-        return "$key#${wrap.qualifiedName ?: "\$innerClass"}"
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): MSetTable<V> {
-        val savedKey = genKey(key, wrap)
-        val result = trees.getOrPut(savedKey) {
-            MSetTable(savedKey, wrap)
-        }
-        if (result.clazz != wrap) {
-            throw ClassCastException("${result.clazz} != $wrap")
-        }
-        if (result.available.not()) {
-            throw DestroyException("$key 已过期.")
-        }
-        config.createHook(result)
-        return result as MSetTable<V>
-    }
-
-    override fun <V : Any> drop(key: String, wrap: KClass<V>): Boolean {
-        return get(key, wrap)
-            .filter { it.available }
-            .map {
-                it.delete()
-                trees.remove(genKey(key, wrap))
-                true
-            }.orElse(false)
-    }
-
-    override fun <V : Any> exists(key: String, wrap: KClass<V>): Boolean {
-        return Optional.ofNullable(trees[genKey(key, wrap)])
-            .filter { it.clazz == wrap }
-            .filter { it.available }.isPresent
-    }
-
-    override fun refresh() {
-        trees.filter { it.value.available.not() }
-            .map { it.key }.forEach {
-                trees.remove(it)
+class MSetOption(config: MemoryDataConfig) : LightSetOption, DataRefresh, Closeable {
+    private val internal = MemoryOption(
+        config,
+        create = object : TableCreate {
+            override fun <V : Any> new(key: String, wrap: KClass<V>): EmptyMemoryTable<V> {
+                return MSetTable(key, wrap)
             }
+        }
+    )
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightSetTable<V>> {
+        return internal.get(key, wrap) as Optional<out LightSetTable<V>>
     }
 
-    override fun close() {
-        trees.forEach { (_, u) ->
-            u.delete()
-        }
-        trees.clear()
+    @Suppress("UNCHECKED_CAST")
+    override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightSetTable<V> {
+        return internal.getOrCreate(key, wrap) as LightSetTable<V>
     }
+
+    override val config: DataConfig
+        get() = internal.config
+
+    override fun <V : Any> drop(key: String, wrap: KClass<V>) = internal.drop(key, wrap)
+
+    override fun <V : Any> exists(key: String, wrap: KClass<V>) = internal.exists(key, wrap)
+
+    override fun refresh() = internal.refresh()
+
+    override fun close() = internal.close()
 }

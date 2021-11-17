@@ -20,4 +20,8 @@ class JedisLightDB : LightDB<JedisLightDBConfig> {
     override fun withSet(name: String): LightSetOption {
         TODO("Not yet implemented")
     }
+
+    override fun close() {
+        TODO("Not yet implemented")
+    }
 }
