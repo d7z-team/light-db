@@ -25,6 +25,22 @@ class MMapValue<V : Any>(private val table: MMapTable<V>) : LightMapValue<V> {
         table.data.containsKey(key)
     }
 
+    override fun merge(key: String, value: V, remapping: (oldValue: V, newValue: V) -> V): V = table.checkDestroy {
+        table.data.merge(key, value, remapping) ?: throw RuntimeException("发生不可预知的错误，此时不应该为 null")
+    }
+
+    override fun getAndSet(key: String, oldValue: V, newValue: V): Boolean = table.checkDestroy {
+        table.data.merge(
+            key, newValue
+        ) { v1, _ ->
+            if (v1 == oldValue) {
+                newValue
+            } else {
+                oldValue
+            }
+        } == newValue
+    }
+
     override fun get(key: String): Optional<V> = table.checkDestroy {
         Optional.ofNullable(table.data[key])
     }

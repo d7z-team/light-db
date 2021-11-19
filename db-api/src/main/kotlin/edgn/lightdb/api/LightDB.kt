@@ -10,22 +10,22 @@ import java.io.Closeable
  */
 interface LightDB<CFG : LightDBConfig> : Closeable {
     /**
-     * 此 LightDB 配置
+     * 此 LightDB 相关配置
      */
     val config: CFG
 
     /**
-     * Map 相关操作
+     * Map 相关操作，针对不同模块的 map 操作可指定不同的名称用于区分
      */
     fun withMap(name: String = "_default"): LightMapOption
 
     /**
-     * List 相关操作
+     * List 相关操作 ， 针对不同模块的 list 操作可指定不同的名称用于区分
      */
     fun withList(name: String = "_default"): LightListOption
 
     /**
-     * Set 相关操作
+     * Set 相关操作 ， 针对不同模块的 set 操作可指定不同的名称用于区分
      */
     fun withSet(name: String = "_default"): LightSetOption
 }

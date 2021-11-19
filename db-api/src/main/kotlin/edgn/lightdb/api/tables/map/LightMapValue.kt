@@ -32,6 +32,21 @@ interface LightMapValue<V : Any> : DataValue<V> {
     fun putIfAbsent(key: String, value: V): V
 
     /**
+     *  比较并替换
+     *
+     *  如果当前 key的数据为 oldValue ，则替换成 newValue并返回 true
+     *  如果当前 key的数据不为 oldValue 则返回 false
+     *  如果 key不存在则直接添加且返回 true
+     */
+    fun getAndSet(key: String, oldValue: V, newValue: V): Boolean
+
+    /**
+     * 如果指定的键尚未与值相关联，则将其与给定值相关联。 否则，用 remapping 函数的结果替换该值
+     *
+     */
+    fun merge(key: String, value: V, remapping: (oldValue: V, newValue: V) -> V): V
+
+    /**
      * 如果映射包含指定的键，则返回true
      */
     fun containsKey(key: String): Boolean
