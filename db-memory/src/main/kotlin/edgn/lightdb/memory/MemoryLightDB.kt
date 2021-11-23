@@ -81,7 +81,7 @@ class MemoryLightDB @JvmOverloads constructor(
             return
         }
         timer.cancel()
-        listNamespace.forEach { (_, u) -> u.close() } // TODO: 存在线程安全问题
+        listNamespace.forEach { (_, u) -> u.close() } // TODO: 可能存在线程安全问题
         mapNamespace.forEach { (_, u) -> u.close() }
         setNamespace.forEach { (_, u) -> u.close() }
         listNamespace.clear()

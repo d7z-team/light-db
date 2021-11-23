@@ -17,10 +17,10 @@ internal class ExpireMemoryTableTest {
         override val available: Boolean
             get() = expired.not()
         override val clazz: KClass<Any>
-            get() = TODO("Not yet implemented")
+            get() = throw RuntimeException("Stub!")
 
         override fun items(): Optional<out DataValue<Any>> {
-            TODO("Not yet implemented")
+            throw RuntimeException("Stub!")
         }
 
         override fun delete() {
