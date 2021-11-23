@@ -4,9 +4,9 @@ import edgn.lightdb.api.LightDB
 import edgn.lightdb.api.tables.list.LightListOption
 import edgn.lightdb.api.tables.map.LightMapOption
 import edgn.lightdb.api.tables.set.LightSetOption
-import edgn.lightdb.memory.internal.impl.list.MListOption
-import edgn.lightdb.memory.internal.impl.map.MMapOption
-import edgn.lightdb.memory.internal.impl.set.MSetOption
+import edgn.lightdb.memory.internal.data.list.MListOption
+import edgn.lightdb.memory.internal.data.map.MMapOption
+import edgn.lightdb.memory.internal.data.set.MSetOption
 import edgn.lightdb.memory.internal.universal.DataRefresh
 import java.util.Timer
 import java.util.concurrent.ConcurrentHashMap

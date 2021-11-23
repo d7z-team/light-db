@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal.impl.list
+package edgn.lightdb.memory.internal.data.list
 
 import edgn.lightdb.api.tables.list.LightListTable
 import edgn.lightdb.memory.internal.universal.table.MemoryTable

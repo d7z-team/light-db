@@ -43,11 +43,12 @@ abstract class ExpireMemoryTable<T : Any> : DataTable<T> {
     }
 
     override fun expire(timeout: Long, unit: TimeUnit) = checkDestroy {
+        val now = utcDate
         if (timeout < 0) {
             // 强制过期
-            expireData.set(utcDate - 1)
+            expireData.set(now - 1)
         } else {
-            expireData.set(unit.toSeconds(timeout))
+            expireData.set(now + unit.toSeconds(timeout))
         }
     }
 

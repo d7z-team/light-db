@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal.impl.list
+package edgn.lightdb.memory.internal.data.list
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal.impl.map
+package edgn.lightdb.memory.internal.data.map
 
 import edgn.lightdb.api.tables.map.LightMapTable
 import edgn.lightdb.memory.internal.universal.table.MemoryTable

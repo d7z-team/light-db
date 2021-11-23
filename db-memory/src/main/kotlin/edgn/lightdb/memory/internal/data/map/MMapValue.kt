@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal.impl.map
+package edgn.lightdb.memory.internal.data.map
 
 import edgn.lightdb.api.tables.map.LightMapValue
 import java.util.Optional

@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal.impl.list
+package edgn.lightdb.memory.internal.data.list
 
 import edgn.lightdb.memory.MemoryDataConfig
 import org.junit.jupiter.api.Assertions.* // ktlint-disable no-wildcard-imports
