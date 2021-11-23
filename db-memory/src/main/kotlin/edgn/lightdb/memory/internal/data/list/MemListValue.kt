@@ -3,7 +3,7 @@ package edgn.lightdb.memory.internal.data.list
 import edgn.lightdb.api.tables.list.LightListValue
 import java.util.Optional
 
-class MListValue<V : Any>(private val table: MListTable<V>) : LightListValue<V> {
+class MemListValue<V : Any>(private val table: MemListTable<V>) : LightListValue<V> {
     override val size: Long
         get() = table.checkDestroy { table.data.size.toLong() }
 
@@ -60,7 +60,7 @@ class MListValue<V : Any>(private val table: MListTable<V>) : LightListValue<V> 
     }
 
     class MListIterator<V : Any>(
-        private val data: MListValue<V>,
+        private val data: MemListValue<V>,
     ) : Iterator<V> {
         private val iterator = data.table.data.iterator()
         override fun hasNext() = data.table.checkDestroy {

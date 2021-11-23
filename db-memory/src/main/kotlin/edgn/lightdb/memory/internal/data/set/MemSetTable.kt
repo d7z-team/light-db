@@ -5,11 +5,11 @@ import edgn.lightdb.memory.internal.universal.table.MemoryTable
 import java.util.concurrent.ConcurrentSkipListSet
 import kotlin.reflect.KClass
 
-class MSetTable<V : Any>(
+class MemSetTable<V : Any>(
     override val key: String,
     override val clazz: KClass<V>
-) : MemoryTable<V, MSetValue<V>>(key, clazz), LightSetTable<V> {
-    override val value = MSetValue(this)
+) : MemoryTable<V, MemSetValue<V>>(key, clazz), LightSetTable<V> {
+    override val value = MemSetValue(this)
 
     /**
      * 存储对象

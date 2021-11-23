@@ -3,14 +3,14 @@ package edgn.lightdb.memory.internal.data.list
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class MListValueTest {
+internal class MemListValueTest {
     data class TestData(
         val data: String
     )
 
     @Test
     fun getSize() {
-        val data = MListTable("test", TestData::class).items().get()
+        val data = MemListTable("test", TestData::class).items().get()
         assertEquals(data.size, 0)
         data.add(TestData("12"))
         assertEquals(data.size, 1)
@@ -18,7 +18,7 @@ internal class MListValueTest {
 
     @Test
     fun clear() {
-        val data = MListTable("test", TestData::class).items().get()
+        val data = MemListTable("test", TestData::class).items().get()
         data.add(TestData("12"))
         assertEquals(data.size, 1)
         data.clear()
@@ -27,7 +27,7 @@ internal class MListValueTest {
 
     @Test
     fun remove() {
-        val data = MListTable("test", TestData::class).items().get()
+        val data = MemListTable("test", TestData::class).items().get()
         data.add(TestData("11"))
         data.add(TestData("12"))
         data.add(TestData("13"))
@@ -39,7 +39,7 @@ internal class MListValueTest {
 
     @Test
     fun set() {
-        val data = MListTable("test", TestData::class).items().get()
+        val data = MemListTable("test", TestData::class).items().get()
         data.add(TestData("11"))
         data.add(TestData("12"))
         data.add(TestData("13"))
@@ -50,7 +50,7 @@ internal class MListValueTest {
 
     @Test
     fun indexOf() {
-        val data = MListTable("test", TestData::class).items().get()
+        val data = MemListTable("test", TestData::class).items().get()
         val first = TestData("11")
         val second = TestData("12")
         val third = TestData("13")
@@ -63,7 +63,7 @@ internal class MListValueTest {
 
     @Test
     fun sortWith() {
-        val data = MListTable("test", Int::class).items().get()
+        val data = MemListTable("test", Int::class).items().get()
         data.add(2)
         data.add(1)
         data.add(3)

@@ -12,12 +12,12 @@ import java.io.Closeable
 import java.util.Optional
 import kotlin.reflect.KClass
 
-class MSetOption(config: MemoryDataConfig) : LightSetOption, DataRefresh, Closeable {
+class MemSetOption(config: MemoryDataConfig) : LightSetOption, DataRefresh, Closeable {
     private val internal = MemoryOption(
         config,
         create = object : TableCreate {
             override fun <V : Any> new(key: String, wrap: KClass<V>): EmptyMemoryTable<V> {
-                return MSetTable(key, wrap)
+                return MemSetTable(key, wrap)
             }
         }
     )

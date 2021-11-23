@@ -5,11 +5,11 @@ import edgn.lightdb.memory.internal.universal.table.MemoryTable
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
-class MMapTable<V : Any>(
+class MemMapTable<V : Any>(
     override val key: String,
     override val clazz: KClass<V>
-) : MemoryTable<V, MMapValue<V>>(key, clazz), LightMapTable<V> {
-    override val value = MMapValue(this)
+) : MemoryTable<V, MemMapValue<V>>(key, clazz), LightMapTable<V> {
+    override val value = MemMapValue(this)
 
     val data: ConcurrentHashMap<String, V> = ConcurrentHashMap()
 

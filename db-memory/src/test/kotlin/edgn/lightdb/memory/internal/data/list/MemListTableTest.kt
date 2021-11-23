@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertThrows
 import java.util.Optional
 import java.util.concurrent.TimeUnit
 
-internal class MListTableTest {
+internal class MemListTableTest {
 
     data class TestData(
         val data: String
@@ -16,7 +16,7 @@ internal class MListTableTest {
 
     @Test
     fun testExpire() {
-        val table: LightListTable<TestData> = MListTable("test", TestData::class)
+        val table: LightListTable<TestData> = MemListTable("test", TestData::class)
         assertTrue(table.available)
         table.expire(-1, TimeUnit.SECONDS)
         assertFalse(table.available)

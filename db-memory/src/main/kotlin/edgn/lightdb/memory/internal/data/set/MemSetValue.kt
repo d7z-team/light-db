@@ -2,7 +2,7 @@ package edgn.lightdb.memory.internal.data.set
 
 import edgn.lightdb.api.tables.set.LightSetValue
 
-class MSetValue<V : Any>(private val table: MSetTable<V>) : LightSetValue<V> {
+class MemSetValue<V : Any>(private val table: MemSetTable<V>) : LightSetValue<V> {
     override val size: Long
         get() = table.checkDestroy {
             table.data.size.toLong()
@@ -29,7 +29,7 @@ class MSetValue<V : Any>(private val table: MSetTable<V>) : LightSetValue<V> {
     }
 
     class SetIterator<V : Any>(
-        private val data: MSetValue<V>
+        private val data: MemSetValue<V>
     ) : Iterator<V> {
         private val iterator = data.table.data.iterator()
         override fun hasNext(): Boolean = data.table.checkDestroy {

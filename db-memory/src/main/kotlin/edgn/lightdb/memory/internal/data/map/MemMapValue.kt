@@ -3,7 +3,7 @@ package edgn.lightdb.memory.internal.data.map
 import edgn.lightdb.api.tables.map.LightMapValue
 import java.util.Optional
 
-class MMapValue<V : Any>(private val table: MMapTable<V>) : LightMapValue<V> {
+class MemMapValue<V : Any>(private val table: MemMapTable<V>) : LightMapValue<V> {
     override val size: Long
         get() = table.checkDestroy {
             table.data.size.toLong()
@@ -50,7 +50,7 @@ class MMapValue<V : Any>(private val table: MMapTable<V>) : LightMapValue<V> {
     }
 
     class MapKeysIterator<V : Any>(
-        private val data: MMapValue<V>,
+        private val data: MemMapValue<V>,
     ) : Iterator<String> {
         private val keys = data.table.data.keys().asIterator()
 
