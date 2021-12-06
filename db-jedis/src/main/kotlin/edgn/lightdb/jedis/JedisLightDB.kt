@@ -5,9 +5,11 @@ import edgn.lightdb.api.tables.list.LightListOption
 import edgn.lightdb.api.tables.map.LightMapOption
 import edgn.lightdb.api.tables.set.LightSetOption
 
-class JedisLightDB : LightDB<JedisLightDBConfig> {
-    override val config: JedisLightDBConfig
-        get() = TODO("Not yet implemented")
+class JedisLightDB
+@JvmOverloads
+constructor(
+    override val config: JedisDataConfig = JedisDataConfig()
+) : LightDB<JedisDataConfig> {
 
     override fun withMap(name: String): LightMapOption {
         TODO("Not yet implemented")

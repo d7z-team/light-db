@@ -7,6 +7,7 @@ module edgn.lightdb.jedis {
     requires redis.clients.jedis;
     requires com.google.gson;
     requires edgn.lightdb.api;
+    requires edgn.lightdb.utils;
     exports edgn.lightdb.jedis;
     provides LightDB with JedisLightDB;
 }
