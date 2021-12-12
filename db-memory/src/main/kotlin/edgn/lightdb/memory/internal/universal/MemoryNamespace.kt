@@ -1,7 +1,7 @@
 package edgn.lightdb.memory.internal.universal
 
 import edgn.lightdb.api.DestroyException
-import edgn.lightdb.api.tables.DataOption
+import edgn.lightdb.api.tables.DataNamespace
 import edgn.lightdb.memory.MemoryDataConfig
 import edgn.lightdb.memory.internal.universal.table.EmptyMemoryTable
 import java.io.Closeable
@@ -9,11 +9,11 @@ import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
-class MemoryOption(
+class MemoryNamespace(
     config: MemoryDataConfig,
     private val create: TableCreate
 ) :
-    DataOption,
+    DataNamespace,
     DataRefresh,
     Closeable {
     override val config = MemoryDataConfig(config)

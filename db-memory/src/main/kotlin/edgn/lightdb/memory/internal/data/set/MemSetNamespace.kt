@@ -1,19 +1,19 @@
 package edgn.lightdb.memory.internal.data.set
 
 import edgn.lightdb.api.tables.DataConfig
-import edgn.lightdb.api.tables.set.LightSetOption
+import edgn.lightdb.api.tables.set.LightSetNamespace
 import edgn.lightdb.api.tables.set.LightSetTable
 import edgn.lightdb.memory.MemoryDataConfig
 import edgn.lightdb.memory.internal.universal.DataRefresh
-import edgn.lightdb.memory.internal.universal.MemoryOption
+import edgn.lightdb.memory.internal.universal.MemoryNamespace
 import edgn.lightdb.memory.internal.universal.TableCreate
 import edgn.lightdb.memory.internal.universal.table.EmptyMemoryTable
 import java.io.Closeable
 import java.util.Optional
 import kotlin.reflect.KClass
 
-class MemSetOption(config: MemoryDataConfig) : LightSetOption, DataRefresh, Closeable {
-    private val internal = MemoryOption(
+class MemSetNamespace(config: MemoryDataConfig) : LightSetNamespace, DataRefresh, Closeable {
+    private val internal = MemoryNamespace(
         config,
         create = object : TableCreate {
             override fun <V : Any> new(key: String, wrap: KClass<V>): EmptyMemoryTable<V> {

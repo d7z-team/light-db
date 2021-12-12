@@ -17,7 +17,7 @@ internal class MemListOptionTest {
 
     @Test
     fun get() {
-        val memListOption = MemListOption(MemoryDataConfig())
+        val memListOption = MemListNamespace(MemoryDataConfig())
         assertEquals(memListOption.get("test.a", TestDataA::class), Optional.empty<TestDataA>())
         val createDataA = memListOption.getOrCreate("test.a", TestDataA::class)
         assertEquals(memListOption.get("test.a", TestDataB::class), Optional.empty<TestDataB>())
@@ -26,7 +26,7 @@ internal class MemListOptionTest {
 
     @Test
     fun drop() {
-        val memListOption = MemListOption(MemoryDataConfig())
+        val memListOption = MemListNamespace(MemoryDataConfig())
         assertFalse(memListOption.drop("test.a", TestDataA::class))
         val createDataA = memListOption.getOrCreate("test.a", TestDataA::class)
         createDataA.items().get().add(TestDataA("TEST"))
@@ -36,7 +36,7 @@ internal class MemListOptionTest {
 
     @Test
     fun exists() {
-        val memListOption = MemListOption(MemoryDataConfig())
+        val memListOption = MemListNamespace(MemoryDataConfig())
         assertFalse(memListOption.exists("test.a", TestDataA::class))
         memListOption.getOrCreate("test.a", TestDataA::class)
         assertTrue(memListOption.exists("test.a", TestDataA::class))

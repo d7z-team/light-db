@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 /**
  * 各个模块基础函数
  */
-interface DataOption {
+interface DataNamespace {
     /**
      * 管理此命名空间相关的配置
      */

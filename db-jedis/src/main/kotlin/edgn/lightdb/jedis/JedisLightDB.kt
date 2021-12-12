@@ -1,9 +1,9 @@
 package edgn.lightdb.jedis
 
 import edgn.lightdb.api.LightDB
-import edgn.lightdb.api.tables.list.LightListOption
-import edgn.lightdb.api.tables.map.LightMapOption
-import edgn.lightdb.api.tables.set.LightSetOption
+import edgn.lightdb.api.tables.list.LightListNamespace
+import edgn.lightdb.api.tables.map.LightMapNamespace
+import edgn.lightdb.api.tables.set.LightSetNamespace
 
 class JedisLightDB
 @JvmOverloads
@@ -11,15 +11,15 @@ constructor(
     override val config: JedisDataConfig = JedisDataConfig()
 ) : LightDB<JedisDataConfig> {
 
-    override fun withMap(name: String): LightMapOption {
+    override fun withMap(name: String): LightMapNamespace {
         TODO("Not yet implemented")
     }
 
-    override fun withList(name: String): LightListOption {
+    override fun withList(name: String): LightListNamespace {
         TODO("Not yet implemented")
     }
 
-    override fun withSet(name: String): LightSetOption {
+    override fun withSet(name: String): LightSetNamespace {
         TODO("Not yet implemented")
     }
 

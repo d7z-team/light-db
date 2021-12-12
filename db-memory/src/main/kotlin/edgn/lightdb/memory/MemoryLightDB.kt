@@ -1,12 +1,12 @@
 package edgn.lightdb.memory
 
 import edgn.lightdb.api.LightDB
-import edgn.lightdb.api.tables.list.LightListOption
-import edgn.lightdb.api.tables.map.LightMapOption
-import edgn.lightdb.api.tables.set.LightSetOption
-import edgn.lightdb.memory.internal.data.list.MemListOption
-import edgn.lightdb.memory.internal.data.map.MemMapOption
-import edgn.lightdb.memory.internal.data.set.MemSetOption
+import edgn.lightdb.api.tables.list.LightListNamespace
+import edgn.lightdb.api.tables.map.LightMapNamespace
+import edgn.lightdb.api.tables.set.LightSetNamespace
+import edgn.lightdb.memory.internal.data.list.MemListNamespace
+import edgn.lightdb.memory.internal.data.map.MemMapNamespace
+import edgn.lightdb.memory.internal.data.set.MemSetNamespace
 import edgn.lightdb.memory.internal.universal.DataRefresh
 import java.util.Timer
 import java.util.concurrent.ConcurrentHashMap
@@ -34,28 +34,28 @@ class MemoryLightDB @JvmOverloads constructor(
         }
     }
 
-    private val listNamespace = ConcurrentHashMap<String, MemListOption>()
-    private val mapNamespace = ConcurrentHashMap<String, MemMapOption>()
-    private val setNamespace = ConcurrentHashMap<String, MemSetOption>()
+    private val listNamespace = ConcurrentHashMap<String, MemListNamespace>()
+    private val mapNamespace = ConcurrentHashMap<String, MemMapNamespace>()
+    private val setNamespace = ConcurrentHashMap<String, MemSetNamespace>()
 
-    override fun withList(name: String): LightListOption {
+    override fun withList(name: String): LightListNamespace {
         checkClose()
         return listNamespace.getOrPut(key = name) {
-            MemListOption(config)
+            MemListNamespace(config)
         }
     }
 
-    override fun withMap(name: String): LightMapOption {
+    override fun withMap(name: String): LightMapNamespace {
         checkClose()
         return mapNamespace.getOrPut(key = name) {
-            MemMapOption(config)
+            MemMapNamespace(config)
         }
     }
 
-    override fun withSet(name: String): LightSetOption {
+    override fun withSet(name: String): LightSetNamespace {
         checkClose()
         return setNamespace.getOrPut(key = name) {
-            MemSetOption(config)
+            MemSetNamespace(config)
         }
     }
 
