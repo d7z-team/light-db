@@ -16,13 +16,12 @@ java {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
-    implementation("redis.clients:jedis:3.7.0")
+    implementation("redis.clients:jedis:3.7.1")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation(project(":db-api"))
-    implementation(project(":db-utils"))
-    testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
-    testImplementation("org.junit.platform:junit-platform-launcher:1.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
 }
 
 tasks.test {

@@ -1,7 +1,5 @@
 package edgn.lightdb.jedis
 
-import edgn.lightdb.api.LightDBConfig
-import edgn.lightdb.api.tables.DataConfig
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.util.Pool
 import java.util.concurrent.TimeUnit

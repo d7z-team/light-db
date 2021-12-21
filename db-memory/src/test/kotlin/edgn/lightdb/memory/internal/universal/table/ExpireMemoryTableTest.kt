@@ -1,7 +1,7 @@
 package edgn.lightdb.memory.internal.universal.table
 
 import edgn.lightdb.api.DestroyException
-import edgn.lightdb.api.tables.DataValue
+import edgn.lightdb.api.structs.DataValue
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

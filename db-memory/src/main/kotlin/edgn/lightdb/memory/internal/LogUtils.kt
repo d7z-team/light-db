@@ -2,6 +2,7 @@ package edgn.lightdb.memory.internal
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.slf4j.Marker
 import org.slf4j.MarkerFactory
 import kotlin.reflect.KClass
 
@@ -10,7 +11,7 @@ object LogUtils {
         return LoggerFactory.getLogger(clazz.java)
     }
 
-    val marker = MarkerFactory.getMarker("db-memory")
+    val marker: Marker = MarkerFactory.getMarker("db-memory")
 }
 
 inline fun <reified T : Any> T.getLogger(): Logger {

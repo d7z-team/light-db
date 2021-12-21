@@ -1,6 +1,5 @@
 package edgn.lightdb.memory.internal.data.list
 
-import edgn.lightdb.memory.MemoryDataConfig
 import org.junit.jupiter.api.Assertions.* // ktlint-disable no-wildcard-imports
 import org.junit.jupiter.api.Test
 import java.util.Optional
@@ -17,7 +16,7 @@ internal class MemListOptionTest {
 
     @Test
     fun get() {
-        val memListOption = MemListNamespace(MemoryDataConfig())
+        val memListOption = MemListGroup(MemoryDataConfig())
         assertEquals(memListOption.get("test.a", TestDataA::class), Optional.empty<TestDataA>())
         val createDataA = memListOption.getOrCreate("test.a", TestDataA::class)
         assertEquals(memListOption.get("test.a", TestDataB::class), Optional.empty<TestDataB>())
@@ -26,7 +25,7 @@ internal class MemListOptionTest {
 
     @Test
     fun drop() {
-        val memListOption = MemListNamespace(MemoryDataConfig())
+        val memListOption = MemListGroup(MemoryDataConfig())
         assertFalse(memListOption.drop("test.a", TestDataA::class))
         val createDataA = memListOption.getOrCreate("test.a", TestDataA::class)
         createDataA.items().get().add(TestDataA("TEST"))
@@ -36,7 +35,7 @@ internal class MemListOptionTest {
 
     @Test
     fun exists() {
-        val memListOption = MemListNamespace(MemoryDataConfig())
+        val memListOption = MemListGroup(MemoryDataConfig())
         assertFalse(memListOption.exists("test.a", TestDataA::class))
         memListOption.getOrCreate("test.a", TestDataA::class)
         assertTrue(memListOption.exists("test.a", TestDataA::class))

@@ -1,31 +1,27 @@
 package edgn.lightdb.api
 
-import edgn.lightdb.api.tables.list.LightListNamespace
-import edgn.lightdb.api.tables.map.LightMapNamespace
-import edgn.lightdb.api.tables.set.LightSetNamespace
+import edgn.lightdb.api.structs.list.LightListGroup
+import edgn.lightdb.api.structs.map.LightMapGroup
+import edgn.lightdb.api.structs.set.LightSetGroup
 import java.io.Closeable
 
 /**
  * LightDB 主体
  */
-interface LightDB<CFG : LightDBConfig> : Closeable {
-    /**
-     * 此 LightDB 相关配置
-     */
-    val config: CFG
+interface LightDB : Closeable {
 
     /**
      * Map 相关操作，针对不同模块的 map 操作可指定不同的名称用于区分
      */
-    fun withMap(name: String = "_default"): LightMapNamespace
+    fun withMap(name: String = "_default"): LightMapGroup
 
     /**
      * List 相关操作 ， 针对不同模块的 list 操作可指定不同的名称用于区分
      */
-    fun withList(name: String = "_default"): LightListNamespace
+    fun withList(name: String = "_default"): LightListGroup
 
     /**
      * Set 相关操作 ， 针对不同模块的 set 操作可指定不同的名称用于区分
      */
-    fun withSet(name: String = "_default"): LightSetNamespace
+    fun withSet(name: String = "_default"): LightSetGroup
 }
