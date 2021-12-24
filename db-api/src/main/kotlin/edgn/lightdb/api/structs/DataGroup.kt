@@ -1,7 +1,5 @@
 package edgn.lightdb.api.structs
 
-import edgn.lightdb.api.OptionNotSupportException
-import edgn.lightdb.api.support.config.DataGroupConfig
 import java.util.Optional
 import kotlin.reflect.KClass
 
@@ -47,25 +45,10 @@ interface DataGroup {
      * 你可以使用实例的 `clear()` 方法清空
      *
      */
-    fun <V : Any> drop(key: String): Boolean
+    fun drop(key: String): Boolean
 
     /**
      * 判断此key的实例是否存在
      */
-    fun <V : Any> exists(key: String): Boolean
-
-    /**
-     * 实例的附加属性
-     *
-     * 如果 key 不存在则返回 Optional.empty() ,
-     * 如果 configType 属性不受支持则抛出`OptionNotSupportException`异常
-     */
-    @Throws(OptionNotSupportException::class)
-    fun <T : DataGroupConfig> options(key: String, configType: KClass<T>): Optional<T>
-
-    /**
-     * 配置当前名称空间默认的附加属性
-     */
-    @Throws(OptionNotSupportException::class)
-    fun <T : DataGroupConfig> defaultOptions(configType: KClass<T>): T
+    fun exists(key: String): Boolean
 }

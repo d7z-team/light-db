@@ -1,4 +1,4 @@
-package edgn.lightdb.memory.internal
+package edgn.lightdb.memory.internal.universal.utils
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

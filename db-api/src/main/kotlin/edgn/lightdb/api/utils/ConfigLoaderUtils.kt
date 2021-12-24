@@ -3,7 +3,7 @@ package edgn.lightdb.api.utils
 /**
  * 环境配置加载器
  */
-class ConfigLoader(private val source: Map<String, String>) {
+class ConfigLoaderUtils(private val source: Map<String, String>) {
     /**
      * 获取String配置
      */

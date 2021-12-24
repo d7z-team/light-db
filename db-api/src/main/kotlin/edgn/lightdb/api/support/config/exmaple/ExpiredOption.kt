@@ -1,11 +1,13 @@
-package edgn.lightdb.api.support.config
+package edgn.lightdb.api.support.config.exmaple
 
+import edgn.lightdb.api.support.config.DataValueOption
 import java.util.concurrent.TimeUnit
 
 /**
  * 带过期时间的附加配置
  */
-interface ExpiredGroupConfig : DataGroupConfig {
+interface ExpiredOption : DataValueOption {
+
     /**
      * 根据传入单位获取对应过期时间
      * 注意：如果实例已过期则返回0 ，如果永不过期则返回 -1
@@ -13,8 +15,8 @@ interface ExpiredGroupConfig : DataGroupConfig {
     fun expired(unit: TimeUnit): Long
 
     /**
-     * 配置过期时间，如果传入数值小于0 则立即过期
-     * 注意：如果实例已过期则配置无效且抛出异常
+     * 配置过期时间，
+     * 如果传入数值小于0 则立即过期
      */
     fun expired(date: Long, unit: TimeUnit)
 

@@ -63,7 +63,7 @@ interface LightMapValue<K : Any, V : Any> : DataValue<V> {
      * @param key K 键
      * @return Optional<V> 返回 key 对应的数据，如果不存在则返回 NULL
      */
-    fun get(key: K): Optional<V>
+    operator fun get(key: K): Optional<V>
 
     /**
      * 数据迭代器
@@ -71,5 +71,5 @@ interface LightMapValue<K : Any, V : Any> : DataValue<V> {
      * 注意，如果数据长度发生变化将触发迭代错误
      *
      */
-    fun keys(): Iterator<String>
+    fun keys(): Iterator<K>
 }

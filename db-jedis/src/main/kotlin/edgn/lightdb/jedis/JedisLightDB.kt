@@ -5,11 +5,8 @@ import edgn.lightdb.api.structs.list.LightListGroup
 import edgn.lightdb.api.structs.map.LightMapGroup
 import edgn.lightdb.api.structs.set.LightSetGroup
 
-class JedisLightDB
-@JvmOverloads
-constructor(
-    override val config: JedisDataConfig = JedisDataConfig()
-) : LightDB<JedisDataConfig> {
+class JedisLightDB :
+    LightDB {
 
     override fun withMap(name: String): LightMapGroup {
         TODO("Not yet implemented")
