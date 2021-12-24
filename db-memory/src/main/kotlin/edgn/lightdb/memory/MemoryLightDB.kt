@@ -7,12 +7,13 @@ import edgn.lightdb.api.structs.set.LightSetGroup
 import edgn.lightdb.memory.internal.data.list.MemListGroup
 import edgn.lightdb.memory.internal.data.map.MemMapGroup
 import edgn.lightdb.memory.internal.data.set.MemSetGroup
+import edgn.lightdb.memory.internal.universal.MemoryRefresh
 import java.util.concurrent.ConcurrentHashMap
 
 /**
  * LightDB 内存后端实现
  */
-class MemoryLightDB : LightDB {
+class MemoryLightDB : LightDB, MemoryRefresh {
 
     private val listNamespace = ConcurrentHashMap<String, MemListGroup>()
     private val mapNamespace = ConcurrentHashMap<String, MemMapGroup>()
@@ -34,6 +35,12 @@ class MemoryLightDB : LightDB {
         return setNamespace.getOrPut(key = name) {
             MemSetGroup()
         }
+    }
+
+    override fun gc() {
+        listNamespace.values.forEach { it.gc() }
+        mapNamespace.values.forEach { it.gc() }
+        setNamespace.values.forEach { it.gc() }
     }
 
     @Synchronized

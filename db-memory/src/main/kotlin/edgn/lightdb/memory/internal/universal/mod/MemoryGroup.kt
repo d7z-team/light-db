@@ -23,6 +23,15 @@ class MemoryGroup<T : IModules> : Closeable {
         return get(key).isPresent
     }
 
+    fun removeIf(filter: (T) -> Boolean) {
+        val iterator = dataMap.iterator()
+        while (iterator.hasNext()) {
+            if (filter(iterator.next().value)) {
+                iterator.remove()
+            }
+        }
+    }
+
     override fun close() {
         dataMap.values.forEach { it.clear() }
         dataMap.clear()

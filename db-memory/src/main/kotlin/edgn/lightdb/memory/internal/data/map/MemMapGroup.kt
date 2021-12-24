@@ -2,12 +2,13 @@ package edgn.lightdb.memory.internal.data.map
 
 import edgn.lightdb.api.structs.map.LightMapGroup
 import edgn.lightdb.api.structs.map.LightMapValue
+import edgn.lightdb.memory.internal.universal.MemoryRefresh
 import edgn.lightdb.memory.internal.universal.mod.MemoryGroup
 import java.io.Closeable
 import java.util.Optional
 import kotlin.reflect.KClass
 
-class MemMapGroup : LightMapGroup, Closeable {
+class MemMapGroup : LightMapGroup, Closeable, MemoryRefresh {
     private val container = MemoryGroup<MemMapValue<out Any, out Any>>()
 
     override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightMapValue<String, V>> {
@@ -63,5 +64,11 @@ class MemMapGroup : LightMapGroup, Closeable {
 
     override fun close() {
         container.close()
+    }
+
+    override fun gc() {
+        container.removeIf {
+            it.modules.available.not()
+        }
     }
 }
