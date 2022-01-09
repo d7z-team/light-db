@@ -1,13 +1,13 @@
 package edgn.lightdb.api.structs.list
 
-import edgn.lightdb.api.structs.DataValue
+import edgn.lightdb.api.structs.LightDBData
 import java.util.Optional
 
 /**
  * List 实例
  * @param V : Any 实例持有的类型
  */
-interface LightListValue<V : Any> : DataValue<V> {
+interface LightList<V : Any> : LightDBData<V> {
 
     /**
      * 添加数据到末尾
@@ -56,19 +56,14 @@ interface LightListValue<V : Any> : DataValue<V> {
     fun get(index: Long): Optional<V>
 
     /**
-     * 根据数据获取索引，不存在则返回 -1
+     * 根据数据查找索引，不存在则返回 -1
      */
     fun indexOf(element: V): Long
 
     /**
-     * 根据数据获取索引，不存在则返回 -1
+     * 根据数据查找索引，不存在则返回 -1
      */
     fun lastIndexOf(element: V): Long
-
-    /**
-     * 排序List
-     */
-    fun sortWith(comparator: Comparator<V>)
 
     /**
      * 数据迭代器

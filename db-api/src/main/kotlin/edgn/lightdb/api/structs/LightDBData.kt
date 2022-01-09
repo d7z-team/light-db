@@ -1,12 +1,18 @@
 package edgn.lightdb.api.structs
 
-import edgn.lightdb.api.support.config.DataValueOptions
 import kotlin.reflect.KClass
 
 /**
  * 实例对象
  */
-interface DataValue<T : Any> : DataValueOptions {
+interface LightDBData<T : Any> {
+
+    /**
+     * 管理实例对象元数据
+     *
+     * 通过改变元数据来定义底层实现的工作行为
+     */
+    val meta: MetaData
 
     /**
      * 数据类型

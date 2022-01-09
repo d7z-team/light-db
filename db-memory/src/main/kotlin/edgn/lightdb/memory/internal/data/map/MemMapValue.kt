@@ -1,24 +1,22 @@
 package edgn.lightdb.memory.internal.data.map
 
-import edgn.lightdb.api.structs.map.LightMapValue
-import edgn.lightdb.api.support.config.DataValueOption
-import edgn.lightdb.memory.internal.universal.mod.IModules
-import edgn.lightdb.memory.internal.universal.mod.MemoryModules
-import edgn.lightdb.memory.internal.universal.opt.MemOptions
+import edgn.lightdb.api.structs.map.LightMap
+import edgn.lightdb.memory.internal.utils.IDataModules
+import edgn.lightdb.memory.internal.utils.MemoryMeta
 import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
 class MemMapValue<K : Any, V : Any>(
+    key: String,
     override val keyType: KClass<K>,
     override val valueType: KClass<V>
-) : LightMapValue<K, V>, IModules {
+) : LightMap<K, V>, IDataModules {
 
-    override val modules: MemoryModules = MemoryModules()
+    override val meta: MemoryMeta = MemoryMeta(key)
 
-    private val options = MemOptions(modules)
-
-    override fun <T : DataValueOption> option(option: KClass<T>) = options.option(option)
+    override val available: Boolean
+        get() = meta.available
 
     private val container = ConcurrentHashMap<K, V>()
 
@@ -26,15 +24,15 @@ class MemMapValue<K : Any, V : Any>(
         container.clear()
     }
 
-    override fun put(key: K, value: V) = modules.checkAvailable {
+    override fun put(key: K, value: V) = meta.checkAvailable {
         Optional.ofNullable(container.put(key, value))
     }
 
-    override fun putIfAbsent(key: K, value: V) = modules.checkAvailable {
+    override fun putIfAbsent(key: K, value: V) = meta.checkAvailable {
         container.putIfAbsent(key, value) ?: value
     }
 
-    override fun getAndSet(key: K, oldValue: V, newValue: V) = modules.checkAvailable {
+    override fun getAndSet(key: K, oldValue: V, newValue: V) = meta.checkAvailable {
         container.merge(
             key, newValue
         ) { v1, _ ->
@@ -46,19 +44,19 @@ class MemMapValue<K : Any, V : Any>(
         } == newValue
     }
 
-    override fun merge(key: K, value: V, remapping: (oldValue: V, newValue: V) -> V) = modules.checkAvailable {
+    override fun merge(key: K, value: V, remapping: (oldValue: V, newValue: V) -> V) = meta.checkAvailable {
         container.merge(key, value, remapping) ?: throw RuntimeException("发生不可预知的错误，此时不应该为 null")
     }
 
-    override fun containsKey(key: K) = modules.checkAvailable {
+    override fun containsKey(key: K) = meta.checkAvailable {
         container.containsKey(key)
     }
 
-    override fun get(key: K) = modules.checkAvailable {
+    override fun get(key: K) = meta.checkAvailable {
         Optional.ofNullable(container[key])
     }
 
-    override fun keys() = modules.checkAvailable {
+    override fun keys() = meta.checkAvailable {
         MapKeysIterator(this)
     }
 
@@ -68,13 +66,13 @@ class MemMapValue<K : Any, V : Any>(
         private val keys = data.container.keys().asIterator()
 
         override fun hasNext(): Boolean {
-            return data.modules.checkAvailable {
+            return data.meta.checkAvailable {
                 keys.hasNext()
             }
         }
 
         override fun next(): K {
-            return data.modules.checkAvailable {
+            return data.meta.checkAvailable {
                 keys.next()
             }
         }

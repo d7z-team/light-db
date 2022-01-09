@@ -1,25 +1,24 @@
 package edgn.lightdb.memory.internal.data.set
 
-import edgn.lightdb.api.structs.set.LightSetValue
-import edgn.lightdb.api.support.config.DataValueOption
-import edgn.lightdb.memory.internal.universal.mod.IModules
-import edgn.lightdb.memory.internal.universal.mod.MemoryModules
-import edgn.lightdb.memory.internal.universal.opt.MemOptions
+import edgn.lightdb.api.structs.set.LightSet
+import edgn.lightdb.memory.internal.utils.IDataModules
+import edgn.lightdb.memory.internal.utils.MemoryMeta
 import java.util.concurrent.ConcurrentSkipListSet
 import kotlin.reflect.KClass
 
 class MemSetValue<V : Any>(
     override val valueType: KClass<V>
-) : LightSetValue<V>, IModules {
-    override val modules: MemoryModules = MemoryModules()
+) : LightSet<V>, IDataModules {
 
-    private val options = MemOptions(modules)
+    override val meta = MemoryMeta("")
 
-    override fun <T : DataValueOption> option(option: KClass<T>) = options.option(option)
+    override val available: Boolean
+        get() = meta.available
 
     private val container = ConcurrentSkipListSet<V>()
+
     override val size: Long
-        get() = modules.checkAvailable {
+        get() = meta.checkAvailable {
             container.size.toLong()
         }
 
@@ -27,19 +26,19 @@ class MemSetValue<V : Any>(
         container.clear()
     }
 
-    override fun add(data: V) = modules.checkAvailable {
+    override fun add(data: V) = meta.checkAvailable {
         container.add(data)
     }
 
-    override fun remove(data: V) = modules.checkAvailable {
+    override fun remove(data: V) = meta.checkAvailable {
         container.remove(data)
     }
 
-    override fun contains(data: V) = modules.checkAvailable {
+    override fun contains(data: V) = meta.checkAvailable {
         container.contains(data)
     }
 
-    override fun values() = modules.checkAvailable {
+    override fun values() = meta.checkAvailable {
         container.iterator()
     }
 }

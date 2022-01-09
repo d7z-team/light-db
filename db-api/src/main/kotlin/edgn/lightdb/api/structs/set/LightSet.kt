@@ -1,8 +1,8 @@
 package edgn.lightdb.api.structs.set
 
-import edgn.lightdb.api.structs.DataValue
+import edgn.lightdb.api.structs.LightDBData
 
-interface LightSetValue<V : Any> : DataValue<V> {
+interface LightSet<V : Any> : LightDBData<V> {
     /**
      * 添加数据
      */

@@ -1,9 +1,9 @@
 package edgn.lightdb.memory.internal.data.set
 
+import edgn.lightdb.api.structs.set.LightSet
 import edgn.lightdb.api.structs.set.LightSetGroup
-import edgn.lightdb.api.structs.set.LightSetValue
-import edgn.lightdb.memory.internal.universal.MemoryRefresh
-import edgn.lightdb.memory.internal.universal.mod.MemoryGroup
+import edgn.lightdb.memory.MemoryRefresh
+import edgn.lightdb.memory.internal.utils.MemoryGroup
 import java.io.Closeable
 import java.util.Optional
 import kotlin.reflect.KClass
@@ -12,16 +12,16 @@ class MemSetGroup : LightSetGroup, Closeable, MemoryRefresh {
     private val container = MemoryGroup<MemSetValue<out Any>>()
 
     @Suppress("UNCHECKED_CAST")
-    override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightSetValue<V>> {
+    override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightSet<V>> {
         return container.get(key)
-            .filter { it.valueType == wrap } as Optional<out LightSetValue<V>>
+            .filter { it.valueType == wrap } as Optional<out LightSet<V>>
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightSetValue<V> {
+    override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightSet<V> {
         return container.getOrCreate(key) {
             MemSetValue(wrap)
-        } as LightSetValue<V>
+        } as LightSet<V>
     }
 
     override fun drop(key: String): Boolean {
@@ -35,13 +35,13 @@ class MemSetGroup : LightSetGroup, Closeable, MemoryRefresh {
         return container.exists(key)
     }
 
-    override fun close() {
-        container.close()
+    override fun refresh() {
+        container.removeIf {
+            it.available.not()
+        }
     }
 
-    override fun gc() {
-        container.removeIf {
-            it.modules.available.not()
-        }
+    override fun close() {
+        container.close()
     }
 }

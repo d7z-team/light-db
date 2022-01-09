@@ -11,6 +11,6 @@ open class LightDBException(message: String) : RuntimeException(message)
 class DestroyException(message: String) : LightDBException(message)
 
 /**
- * 选项不被支持
+ * MetaData不被支持 , 未实现对应 MetaData
  */
-class OptionNotSupportException(message: String) : LightDBException(message)
+class MetaDataNotSupportException(message: String) : LightDBException(message)

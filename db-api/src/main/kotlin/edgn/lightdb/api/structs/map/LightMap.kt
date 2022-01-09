@@ -1,6 +1,6 @@
 package edgn.lightdb.api.structs.map
 
-import edgn.lightdb.api.structs.DataValue
+import edgn.lightdb.api.structs.LightDBData
 import java.util.Optional
 import kotlin.reflect.KClass
 
@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
  * Map 实例
  * @param V : Any 包装的数据
  */
-interface LightMapValue<K : Any, V : Any> : DataValue<V> {
+interface LightMap<K : Any, V : Any> : LightDBData<V> {
 
     /**
      * 键 (key) 的数据类型

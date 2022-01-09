@@ -4,30 +4,31 @@ import edgn.lightdb.api.structs.DataGroup
 import java.util.Optional
 import kotlin.reflect.KClass
 
+/**
+ * Map 数据集合
+ */
 interface LightMapGroup : DataGroup {
-    override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightMapValue<String, V>>
-    override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightMapValue<String, V>
+    /**
+     * 获取 map 数据
+     *
+     *  获取集合下的 map 数据，如果不存在则返回 Optional.empty()
+     */
     fun <K : Any, V : Any> get(
         key: String,
         keyType: KClass<K>,
         valueType: KClass<V>
-    ): Optional<out LightMapValue<K, V>>
+    ): Optional<out LightMap<K, V>>
 
+    /**
+     *
+     * 获取现有 Map 或创建新的 Map 对象
+     *
+     * 获取已存在的 Map 对象，如果不存在则新建 Map 对象
+     *
+     */
     fun <K : Any, V : Any> getOrCreate(
         key: String,
         keyType: KClass<K>,
         valueType: KClass<V>
-    ): LightMapValue<K, V>
-
-    fun <K : Any, V : Any> drop(
-        key: String,
-        keyType: KClass<K>,
-        valueType: KClass<V>
-    ): Boolean
-
-    fun <K : Any, V : Any> exists(
-        key: String,
-        keyType: KClass<K>,
-        valueType: KClass<V>
-    ): Boolean
+    ): LightMap<K, V>
 }

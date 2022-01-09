@@ -10,8 +10,5 @@ module edgn.lightdb.api {
     exports edgn.lightdb.api.structs.list;
     exports edgn.lightdb.api.structs.set;
     exports edgn.lightdb.api.structs.map;
-    exports edgn.lightdb.api.support.config;
-    exports edgn.lightdb.api.support.config.exmaple;
-    exports edgn.lightdb.api.support.module;
     exports edgn.lightdb.api.utils;
 }
