@@ -7,6 +7,9 @@ import java.util.Optional
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSuperclassOf
 
+/**
+ * 智能转换 Meta 对象
+ */
 inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrNull(type: KClass<T>): Optional<T> {
     if (this.meta::class.isSuperclassOf(type) && this is T) {
         return Optional.of(this)
@@ -14,10 +17,16 @@ inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrNull(type: KClas
     return Optional.empty()
 }
 
+/**
+ * 智能转换 Meta 对象
+ */
 inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrNull(): Optional<T> {
     return this.metaOrNull(T::class)
 }
 
+/**
+ * 智能转换 Meta 对象
+ */
 inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrThrows(type: KClass<T>): T {
     if (this.meta::class.isSuperclassOf(type) && this is T) {
         return this
@@ -26,6 +35,9 @@ inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrThrows(type: KCl
     }
 }
 
+/**
+ * 智能转换 Meta 对象
+ */
 inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrThrows(): T {
     return this.metaOrThrows(T::class)
 }

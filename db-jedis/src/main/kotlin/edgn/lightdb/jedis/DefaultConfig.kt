@@ -1,6 +1,6 @@
 package edgn.lightdb.jedis
 
-import edgn.lightdb.api.utils.ConfigLoaderUtils
+import edgn.lightdb.jedis.internal.ConfigLoaderUtils
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
 import redis.clients.jedis.JedisPoolConfig

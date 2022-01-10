@@ -11,7 +11,7 @@ import java.io.Closeable
 interface LightDB : Closeable {
 
     /**
-     * LightDB 名称
+     * LightDB实现名称
      */
     val name: String
 
