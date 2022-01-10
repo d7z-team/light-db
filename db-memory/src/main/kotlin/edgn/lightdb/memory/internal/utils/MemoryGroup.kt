@@ -24,10 +24,10 @@ class MemoryGroup<T : IDataModules> : Closeable {
     }
 
     fun removeIf(filter: (T) -> Boolean) {
-        val iterator = dataMap.iterator()
-        while (iterator.hasNext()) {
-            if (filter(iterator.next().value)) {
-                iterator.remove()
+        val keys = dataMap.keys()
+        for (key in keys) {
+            if (filter(dataMap[key] ?: continue)) {
+                dataMap.remove(key)
             }
         }
     }

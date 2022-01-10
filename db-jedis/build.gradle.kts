@@ -16,7 +16,8 @@ java {
 
 dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
-    implementation("redis.clients:jedis:3.7.1")
+    implementation("redis.clients:jedis:4.0.1")
+    implementation("org.json:json:20211205") // version  == jedis.depends.json.version
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation(project(":db-api"))
