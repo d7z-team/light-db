@@ -4,6 +4,7 @@ import edgn.lightdb.api.LightDB
 import edgn.lightdb.api.structs.list.LightListGroup
 import edgn.lightdb.api.structs.map.LightMapGroup
 import edgn.lightdb.api.structs.set.LightSetGroup
+import edgn.lightdb.jedis.internal.data.list.JedisListGroup
 import edgn.lightdb.jedis.internal.data.map.JedisMapGroup
 import edgn.lightdb.jedis.internal.jedis.DefaultJedisPool
 import edgn.lightdb.jedis.options.JedisLightDBConfig
@@ -43,7 +44,13 @@ class JedisLightDB @JvmOverloads constructor(
     }
 
     override fun withList(name: String): LightListGroup {
-        TODO("Not yet implemented")
+        return if (config.cache) {
+            cachedListGroup.getOrPut(name) {
+                JedisListGroup(name, pool, config)
+            }
+        } else {
+            JedisListGroup(name, pool, config)
+        }
     }
 
     override fun withSet(name: String): LightSetGroup {

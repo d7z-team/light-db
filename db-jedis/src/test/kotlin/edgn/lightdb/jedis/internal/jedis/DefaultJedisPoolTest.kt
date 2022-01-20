@@ -8,20 +8,22 @@ internal class DefaultJedisPoolTest {
         System.setProperty("jedis.password", "redis-password")
         val pool = DefaultJedisPool()
         pool.session {
-            it.hset("1212", "1212", "1212")
-            println(it.hget("1212", "121q2"))
             println(
+//                redis.call('hset' , KEYS[1], KEYS[2], ARGV[2])
+
                 it.eval(
                     """
-                    if redis.call('hget' , KEYS[1], KEYS[2]) == ARGV[1] then
-                        redis.call('hset' , KEYS[1], KEYS[2], ARGV[2])
-                        return 1
-                    else
-                        return 0
+                    if redis.call('llen' , KEYS[1]) < tonumber(ARGV[1]) then
+                       return nil
                     end
+                    local internal_data = redis.call('lindex' , KEYS[1], ARGV[1])
+                    local internal_tag = '_light_db_internal_del_tag' .. ARGV[1]
+                    redis.call('lset' , KEYS[1] ,ARGV[1], internal_tag)
+                    redis.call('lrem', KEYS[1], 0, internal_tag)
+                    return internal_data
                     """.trimIndent(),
-                    2, "test", "test", "12", "13"
-                )::class
+                    1, "list", "112"
+                )
             )
         }
         pool.close()
