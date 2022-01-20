@@ -18,7 +18,7 @@ interface LightMap<K : Any, V : Any> : LightDBData<V> {
     /**
      * 提交/覆盖数据
      *
-     * 注意：提交的数据会覆盖旧的数据
+     * 注意：提交的数据会覆盖旧的数据,此函数对应实现可能非原子操作
      *
      * @param key K 键
      * @param value V 数据
@@ -46,12 +46,6 @@ interface LightMap<K : Any, V : Any> : LightDBData<V> {
      *  如果 key不存在则直接添加且返回 true
      */
     fun getAndSet(key: K, oldValue: V, newValue: V): Boolean
-
-    /**
-     * 如果指定的键尚未与值相关联，则将其与给定值相关联。 否则，用 remapping 函数的结果替换该值
-     *
-     */
-    fun merge(key: K, value: V, remapping: (oldValue: V, newValue: V) -> V): V
 
     /**
      * 如果映射包含指定的键，则返回true

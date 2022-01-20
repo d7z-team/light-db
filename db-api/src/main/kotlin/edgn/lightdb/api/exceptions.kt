@@ -3,7 +3,8 @@ package edgn.lightdb.api
 /**
  * LightDB 异常集合
  */
-open class LightDBException(message: String) : RuntimeException(message)
+open class LightDBException @JvmOverloads constructor(message: String, e: Exception? = null) :
+    RuntimeException(message, e)
 
 /**
  * 实例过期异常

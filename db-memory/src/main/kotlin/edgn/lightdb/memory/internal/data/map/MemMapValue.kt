@@ -44,10 +44,6 @@ class MemMapValue<K : Any, V : Any>(
         } == newValue
     }
 
-    override fun merge(key: K, value: V, remapping: (oldValue: V, newValue: V) -> V) = meta.checkAvailable {
-        container.merge(key, value, remapping) ?: throw RuntimeException("发生不可预知的错误，此时不应该为 null")
-    }
-
     override fun containsKey(key: K) = meta.checkAvailable {
         container.containsKey(key)
     }

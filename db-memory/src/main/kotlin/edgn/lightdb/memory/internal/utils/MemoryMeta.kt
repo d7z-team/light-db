@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicLong
 class MemoryMeta(private val name: String) : MemoryMetaData {
 
     /**
-     * -1 : no ttl
-     *  >0 : System.time
+     * - `-1` : no ttl
+     * - `>0` : System.time
      */
     private val internalExpireDate = AtomicLong(-1)
 

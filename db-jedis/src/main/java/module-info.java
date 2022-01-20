@@ -9,5 +9,6 @@ module edgn.lightdb.jedis {
     requires com.google.gson;
     requires edgn.lightdb.api;
     exports edgn.lightdb.jedis;
+    exports edgn.lightdb.jedis.options;
     provides LightDB with JedisLightDB;
 }

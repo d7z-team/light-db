@@ -1,6 +1,6 @@
-package edgn.lightdb.jedis
+package edgn.lightdb.jedis.internal.jedis
 
-import edgn.lightdb.jedis.internal.ConfigLoaderUtils
+import edgn.lightdb.jedis.internal.utils.ConfigLoaderUtils
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
 import redis.clients.jedis.JedisPoolConfig
@@ -9,11 +9,10 @@ import redis.clients.jedis.util.Pool
 
 object DefaultConfig {
     private val configLoaderUtils = ConfigLoaderUtils(
-        System.getProperties()
-            .map {
-                Pair(it.key.toString(), it.value.toString())
-            }
-            .toMap()
+        HashMap<String, String>().apply {
+            System.getenv().forEach { (t, u) -> this[t.toString()] = u.toString() }
+            System.getProperties().forEach { t, u -> this[t.toString()] = u.toString() }
+        }
     )
 
     /**

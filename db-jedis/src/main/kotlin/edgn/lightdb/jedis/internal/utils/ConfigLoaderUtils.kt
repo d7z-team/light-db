@@ -1,4 +1,4 @@
-package edgn.lightdb.jedis.internal
+package edgn.lightdb.jedis.internal.utils
 
 /**
  * 环境配置加载器
