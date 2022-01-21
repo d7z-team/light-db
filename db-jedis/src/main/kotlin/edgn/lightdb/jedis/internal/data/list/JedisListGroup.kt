@@ -30,12 +30,6 @@ class JedisListGroup(
 
     override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightList<V> = pool.session {
         val keyCover = keyCover(key)
-        if (it.exists(keyCover).not()) {
-            it.multi().apply {
-                lpush(keyCover, "CREATE")
-                lrem(keyCover, 0, "CREATE")
-            }.exec()
-        }
         JedisListValue(
             pool = pool,
             config = config,

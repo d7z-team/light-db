@@ -18,19 +18,17 @@ class JedisListValue<V : Any>(
     override val meta = JedisMeta(groupKey = groupKey, pool = pool)
 
     override val size: Long
-        get() = meta.checkAvailable {
+        get() = meta.checkOrDefault(0) {
             it.llen(groupKey)
         }
 
-    override fun clear(): Unit = meta.checkAvailable {
+    override fun clear(): Unit = meta.checkOrDefault(Unit) {
         it.multi().apply {
             del(groupKey)
-            lpush(groupKey, "CREATE")
-            lrem(groupKey, 0, "CREATE")
         }.exec()
     }
 
-    override fun add(element: V): Unit = meta.checkAvailable {
+    override fun add(element: V): Unit = meta.session {
         it.rpush(groupKey, covert.format(element, valueType))
     }
 
@@ -58,7 +56,7 @@ class JedisListValue<V : Any>(
         }
     }
 
-    override fun remove(index: Long): Optional<V> = meta.checkAvailable { jedis ->
+    override fun remove(index: Long): Optional<V> = meta.checkOrDefault(Optional.empty()) { jedis ->
         Optional.ofNullable(
             jedis.eval(
                 """
@@ -66,35 +64,88 @@ class JedisListValue<V : Any>(
                return nil
             end
             local internal_data = redis.call('lindex' , KEYS[1], ARGV[1])
-            local internal_tag = '_light_db_internal_del_tag' .. ARGV[1]
+            local internal_tag = '_light_db_internal_del_tag_' .. ARGV[1]
             redis.call('lset' , KEYS[1] ,ARGV[1], internal_tag)
             redis.call('lrem', KEYS[1], 0, internal_tag)
             return internal_data
                 """.trimIndent(),
-                1, "list", "1"
+                1,
+                groupKey,
+                index.toString()
             )
         ).map {
             covert.reduce(it as String, valueType)
         }
     }
 
-    override fun set(index: Long, element: V): V {
-        TODO("Not yet implemented")
+    override fun set(index: Long, element: V): V = meta.checkAvailable { jedis ->
+        Optional.ofNullable(
+            jedis.eval(
+                """
+            if redis.call('llen' , KEYS[1]) < tonumber(ARGV[1]) then
+               return nil
+            end
+            local old_data = redis.call('lindex' , KEYS[1], ARGV[1])
+            redis.call('lset' , KEYS[1] ,ARGV[1], ARGV[2])
+            return old_data
+                """.trimIndent(),
+                1,
+                groupKey,
+                index.toString(),
+                covert.format(element, valueType)
+            ) as String?
+        ).map {
+            covert.reduce(it, valueType)
+        }.orElseThrow {
+            IndexOutOfBoundsException("index: $index > ${jedis.llen(groupKey)} ")
+        }
     }
 
-    override fun get(index: Long): Optional<V> {
-        TODO("Not yet implemented")
+    override fun get(index: Long): Optional<V> = meta.checkOrDefault(Optional.empty()) { jedis ->
+        Optional.ofNullable(covert.reduce(jedis.lindex(groupKey, index), valueType))
     }
 
-    override fun indexOf(element: V): Long {
-        TODO("Not yet implemented")
+    override fun indexOf(element: V): Long = meta.checkAvailable { jedis ->
+        jedis.eval(
+            """
+            local key = KEYS[1]
+            local obj = ARGV[1]
+            local items = redis.call('lrange', key, 0, -1)
+            for i =1,#items do
+                if items[i] == obj then
+                    return i - 1
+                end
+            end 
+            return -1
+            """.trimIndent(),
+            1,
+            groupKey,
+            covert.format(element, valueType)
+        ) as Long
     }
 
-    override fun lastIndexOf(element: V): Long {
-        TODO("Not yet implemented")
+    override fun lastIndexOf(element: V): Long = meta.checkAvailable { jedis ->
+        jedis.eval(
+            """
+            local key = KEYS[1]
+            local obj = ARGV[1]
+            local items = redis.call('lrange', key, 0, -1)
+            for i =1,#items do
+                if table.remove(items) == obj then
+                    return #items 
+                end
+            end 
+            return -1
+            """.trimIndent(),
+            1,
+            groupKey,
+            covert.format(element, valueType)
+        ) as Long
     }
 
-    override fun values(): Iterator<V> {
-        TODO("Not yet implemented")
+    override fun values(): Iterator<V> = meta.checkAvailable { jedis ->
+        jedis.lrange(groupKey, 0, -1).map {
+            covert.reduce(it, valueType)
+        }.toList().iterator()
     }
 }

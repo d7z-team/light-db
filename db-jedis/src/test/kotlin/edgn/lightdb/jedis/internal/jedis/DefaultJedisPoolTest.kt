@@ -13,16 +13,17 @@ internal class DefaultJedisPoolTest {
 
                 it.eval(
                     """
-                    if redis.call('llen' , KEYS[1]) < tonumber(ARGV[1]) then
-                       return nil
-                    end
-                    local internal_data = redis.call('lindex' , KEYS[1], ARGV[1])
-                    local internal_tag = '_light_db_internal_del_tag' .. ARGV[1]
-                    redis.call('lset' , KEYS[1] ,ARGV[1], internal_tag)
-                    redis.call('lrem', KEYS[1], 0, internal_tag)
-                    return internal_data
+                    local key = KEYS[1]
+                    local obj = ARGV[1]
+                    local items = redis.call('lrange', key, 0, -1)
+                    for i =1,#items do
+                        if table.remove(items) == obj then
+                            return #items 
+                        end
+                    end 
+                    return -1
                     """.trimIndent(),
-                    1, "list", "112"
+                    1, "list", "12"
                 )
             )
         }

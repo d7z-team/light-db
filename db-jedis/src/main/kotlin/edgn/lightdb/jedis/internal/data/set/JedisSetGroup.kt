@@ -1,52 +1,40 @@
-package edgn.lightdb.jedis.internal.data.map
+package edgn.lightdb.jedis.internal.data.set
 
-import edgn.lightdb.api.structs.map.LightMap
-import edgn.lightdb.api.structs.map.LightMapGroup
+import edgn.lightdb.api.structs.set.LightSet
+import edgn.lightdb.api.structs.set.LightSetGroup
 import edgn.lightdb.jedis.options.JedisLightDBConfig
 import edgn.lightdb.jedis.options.JedisPool
 import java.util.Optional
 import kotlin.reflect.KClass
 
-class JedisMapGroup(
+class JedisSetGroup(
     private val name: String,
     private val pool: JedisPool,
     private val config: JedisLightDBConfig
-) : LightMapGroup {
-
-    override fun <K : Any, V : Any> get(
-        key: String,
-        keyType: KClass<K>,
-        valueType: KClass<V>
-    ): Optional<out LightMap<K, V>> = pool.session {
+) : LightSetGroup {
+    override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightSet<V>> = pool.session {
         val keyCover = keyCover(key)
         if (it.exists(keyCover).not()) {
             Optional.empty()
         } else {
             Optional.of(
-                JedisMapValue(
+                JedisSetValue(
                     pool = pool,
                     config = config,
                     groupKey = keyCover,
-                    keyType = keyType,
-                    valueType = valueType
+                    valueType = wrap
                 )
             )
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun <K : Any, V : Any> getOrCreate(
-        key: String,
-        keyType: KClass<K>,
-        valueType: KClass<V>
-    ): LightMap<K, V> = pool.session {
+    override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightSet<V> = pool.session {
         val keyCover = keyCover(key)
-        JedisMapValue(
+        JedisSetValue(
             pool = pool,
             config = config,
             groupKey = keyCover,
-            keyType = keyType,
-            valueType = valueType
+            valueType = wrap
         )
     }
 
@@ -59,6 +47,6 @@ class JedisMapGroup(
     }
 
     private fun keyCover(key: String): String {
-        return "hash:$name:$key"
+        return "set:$name:$key"
     }
 }

@@ -19,16 +19,14 @@ class JedisMapValue<K : Any, V : Any>(
 
     private val covert = config.dataCovert
 
-    override fun clear(): Unit = meta.checkAvailable {
+    override fun clear(): Unit = meta.checkOrDefault(Unit) {
         it.multi().apply {
             del(groupKey)
-            hset(groupKey, "_CREATE", "NOW")
-            hdel(groupKey, "_CREATE")
         }.exec()
     }
 
     // 此 put 返回的数据不一定是上次的数据
-    override fun put(key: K, value: V) = meta.checkAvailable {
+    override fun put(key: K, value: V) = meta.session {
         val multi = it.multi()
         val nativeKey = covert.format(key, keyType)
         val last = multi.hget(groupKey, nativeKey)
@@ -41,7 +39,7 @@ class JedisMapValue<K : Any, V : Any>(
         }
     }
 
-    override fun putIfAbsent(key: K, value: V) = meta.checkAvailable {
+    override fun putIfAbsent(key: K, value: V) = meta.session {
         val multi = it.multi()
         val nativeKey = covert.format(key, keyType)
         val putRes = multi.hsetnx(groupKey, nativeKey, covert.format(value, valueType))
@@ -84,8 +82,7 @@ class JedisMapValue<K : Any, V : Any>(
 
     override fun get(key: K): Optional<V> = meta.checkAvailable { jedis ->
         val nativeKey = covert.format(key, keyType)
-        Optional.ofNullable(jedis.hget(groupKey, nativeKey))
-            .map { covert.reduce(it, valueType) }
+        Optional.ofNullable(jedis.hget(groupKey, nativeKey)).map { covert.reduce(it, valueType) }
     }
 
     /**
@@ -96,7 +93,7 @@ class JedisMapValue<K : Any, V : Any>(
     }
 
     override val size: Long
-        get() = meta.checkAvailable {
+        get() = meta.checkOrDefault(0) {
             it.hlen(groupKey)
         }
 }

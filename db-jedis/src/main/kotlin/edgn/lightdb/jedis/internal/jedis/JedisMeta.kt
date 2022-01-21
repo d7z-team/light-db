@@ -32,6 +32,16 @@ class JedisMeta(
         }
     }
 
+    fun <T : Any> checkOrDefault(default: T, function: (Jedis) -> T): T = pool.session {
+        if (it.exists(groupKey)) {
+            function(it)
+        } else {
+            default
+        }
+    }
+
+    fun <T : Any> session(function: (Jedis) -> T): T = pool.session(function)
+
     override fun get(key: String): Optional<String> {
         return when (key.lowercase()) {
             "db.ttl" -> {
