@@ -3,13 +3,13 @@ package edgn.lightdb.memory.internal.data.list
 import edgn.lightdb.api.structs.list.LightList
 import edgn.lightdb.api.structs.list.LightListGroup
 import edgn.lightdb.memory.MemoryRefresh
+import edgn.lightdb.memory.internal.utils.Clear
 import edgn.lightdb.memory.internal.utils.MemoryGroup
-import java.io.Closeable
 import java.util.Optional
 import kotlin.reflect.KClass
 
-class MemListGroup : LightListGroup, MemoryRefresh, Closeable {
-    private val container = MemoryGroup<MemListValue<out Any>>()
+class MemListGroup : LightListGroup, MemoryRefresh, Clear {
+    val container = MemoryGroup<MemListValue<out Any>>()
 
     @Suppress("UNCHECKED_CAST")
     override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightList<V>> {
@@ -35,8 +35,8 @@ class MemListGroup : LightListGroup, MemoryRefresh, Closeable {
         return container.exists(key)
     }
 
-    override fun close() {
-        container.close()
+    override fun clear() {
+        container.clear()
     }
 
     override fun refresh() {

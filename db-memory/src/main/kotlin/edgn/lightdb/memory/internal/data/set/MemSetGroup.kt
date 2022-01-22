@@ -3,13 +3,13 @@ package edgn.lightdb.memory.internal.data.set
 import edgn.lightdb.api.structs.set.LightSet
 import edgn.lightdb.api.structs.set.LightSetGroup
 import edgn.lightdb.memory.MemoryRefresh
+import edgn.lightdb.memory.internal.utils.Clear
 import edgn.lightdb.memory.internal.utils.MemoryGroup
-import java.io.Closeable
 import java.util.Optional
 import kotlin.reflect.KClass
 
-class MemSetGroup : LightSetGroup, Closeable, MemoryRefresh {
-    private val container = MemoryGroup<MemSetValue<out Any>>()
+class MemSetGroup : LightSetGroup, Clear, MemoryRefresh {
+    val container = MemoryGroup<MemSetValue<out Any>>()
 
     @Suppress("UNCHECKED_CAST")
     override fun <V : Any> get(key: String, wrap: KClass<V>): Optional<out LightSet<V>> {
@@ -20,7 +20,7 @@ class MemSetGroup : LightSetGroup, Closeable, MemoryRefresh {
     @Suppress("UNCHECKED_CAST")
     override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightSet<V> {
         return container.getOrCreate(key) {
-            MemSetValue(wrap)
+            MemSetValue(key, wrap)
         } as LightSet<V>
     }
 
@@ -41,7 +41,7 @@ class MemSetGroup : LightSetGroup, Closeable, MemoryRefresh {
         }
     }
 
-    override fun close() {
-        container.close()
+    override fun clear() {
+        container.clear()
     }
 }

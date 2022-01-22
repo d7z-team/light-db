@@ -32,7 +32,7 @@ class MemMapValue<K : Any, V : Any>(
         container.putIfAbsent(key, value) ?: value
     }
 
-    override fun getAndSet(key: K, oldValue: V, newValue: V) = meta.checkAvailable {
+    override fun compareAndSwap(key: K, oldValue: V, newValue: V) = meta.checkAvailable {
         container.merge(
             key, newValue
         ) { v1, _ ->
@@ -50,6 +50,10 @@ class MemMapValue<K : Any, V : Any>(
 
     override fun get(key: K) = meta.checkAvailable {
         Optional.ofNullable(container[key])
+    }
+
+    override fun removeKey(key: K): Optional<V> = meta.checkAvailable {
+        Optional.ofNullable(container.remove(key))
     }
 
     override fun keys() = meta.checkAvailable {

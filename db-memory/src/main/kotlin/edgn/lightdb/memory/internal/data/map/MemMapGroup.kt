@@ -3,13 +3,13 @@ package edgn.lightdb.memory.internal.data.map
 import edgn.lightdb.api.structs.map.LightMap
 import edgn.lightdb.api.structs.map.LightMapGroup
 import edgn.lightdb.memory.MemoryRefresh
+import edgn.lightdb.memory.internal.utils.Clear
 import edgn.lightdb.memory.internal.utils.MemoryGroup
-import java.io.Closeable
 import java.util.Optional
 import kotlin.reflect.KClass
 
-class MemMapGroup : LightMapGroup, Closeable, MemoryRefresh {
-    private val container = MemoryGroup<MemMapValue<out Any, out Any>>()
+class MemMapGroup : LightMapGroup, Clear, MemoryRefresh {
+    val container = MemoryGroup<MemMapValue<out Any, out Any>>()
 
     @Suppress("UNCHECKED_CAST")
     override fun <K : Any, V : Any> get(
@@ -44,8 +44,8 @@ class MemMapGroup : LightMapGroup, Closeable, MemoryRefresh {
         return container.exists(key)
     }
 
-    override fun close() {
-        container.close()
+    override fun clear() {
+        container.clear()
     }
 
     override fun refresh() {

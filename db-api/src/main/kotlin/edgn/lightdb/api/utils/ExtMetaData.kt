@@ -5,14 +5,13 @@ import edgn.lightdb.api.structs.LightDBData
 import edgn.lightdb.api.structs.MetaData
 import java.util.Optional
 import kotlin.reflect.KClass
-import kotlin.reflect.full.isSuperclassOf
 
 /**
  * 智能转换 Meta 对象
  */
-inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrNull(type: KClass<T>): Optional<T> {
-    if (this.meta::class.isSuperclassOf(type) && this is T) {
-        return Optional.of(this)
+inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrNull(): Optional<T> {
+    if (this.meta is T) {
+        return Optional.of(this.meta as T)
     }
     return Optional.empty()
 }
@@ -20,18 +19,11 @@ inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrNull(type: KClas
 /**
  * 智能转换 Meta 对象
  */
-inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrNull(): Optional<T> {
-    return this.metaOrNull(T::class)
-}
-
-/**
- * 智能转换 Meta 对象
- */
 inline fun <reified T : MetaData, V : Any> LightDBData<V>.metaOrThrows(type: KClass<T>): T {
-    if (this.meta::class.isSuperclassOf(type) && this is T) {
-        return this
+    if (this.meta is T) {
+        return this.meta as T
     } else {
-        throw MetaDataNotSupportException("不支持此 MetaData($type), 目标 MetaData(${this::class}).")
+        throw MetaDataNotSupportException("不支持此 MetaData($type), 目标 MetaData(${this.meta::class}).")
     }
 }
 

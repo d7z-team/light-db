@@ -1,11 +1,13 @@
 package edgn.lightdb.memory.internal.utils
 
-import java.io.Closeable
 import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
 
-class MemoryGroup<T : IDataModules> : Closeable {
+class MemoryGroup<T : IDataModules> : Clear {
     private val dataMap = ConcurrentHashMap<String, T>()
+
+    val size: Int
+        get() = dataMap.size
 
     fun get(key: String): Optional<T> {
         return Optional.ofNullable(dataMap[key]).filter { it.available }
@@ -33,7 +35,7 @@ class MemoryGroup<T : IDataModules> : Closeable {
     }
 
     @Synchronized
-    override fun close() {
+    override fun clear() {
         dataMap.values.forEach { it.clear() }
         dataMap.clear()
     }

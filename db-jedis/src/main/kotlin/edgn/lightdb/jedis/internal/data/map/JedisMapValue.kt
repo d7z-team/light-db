@@ -55,11 +55,12 @@ class JedisMapValue<K : Any, V : Any>(
     /**
      *  使用 redis lua 脚本完成 CAS
      */
-    override fun getAndSet(key: K, oldValue: V, newValue: V) = meta.checkAvailable {
+    override fun compareAndSwap(key: K, oldValue: V, newValue: V) = meta.checkAvailable {
         val nativeKey = covert.format(key, keyType)
         val result = it.eval(
             """
-            if redis.call('hget' , KEYS[1], KEYS[2]) == ARGV[1] then
+            local old_data = redis.call('hget' , KEYS[1], KEYS[2])
+            if old_data == ARGV[1] or old_data == nil then
                 redis.call('hset' , KEYS[1], KEYS[2], ARGV[2])
                 return 1
             else
@@ -83,6 +84,15 @@ class JedisMapValue<K : Any, V : Any>(
     override fun get(key: K): Optional<V> = meta.checkAvailable { jedis ->
         val nativeKey = covert.format(key, keyType)
         Optional.ofNullable(jedis.hget(groupKey, nativeKey)).map { covert.reduce(it, valueType) }
+    }
+
+    override fun removeKey(key: K): Optional<V> = meta.checkAvailable { jedis ->
+        val nativeKey = covert.format(key, keyType)
+        val multi = jedis.multi()
+        val res = multi.hget(groupKey, nativeKey)
+        multi.hdel(groupKey, nativeKey)
+        multi.exec()
+        Optional.ofNullable(res.get()).map { item -> covert.reduce(item, valueType) }
     }
 
     /**

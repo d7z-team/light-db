@@ -8,6 +8,9 @@ import java.lang.reflect.Proxy
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
+/**
+ * 基于 JSON 的对象转换工具
+ */
 class JsonDataCovertUtils : DataCovert {
     private val gson = Gson()
     override fun <T : Any> format(data: T, clazz: KClass<out T>): String {

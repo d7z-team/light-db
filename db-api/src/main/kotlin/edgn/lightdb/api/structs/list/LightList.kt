@@ -37,9 +37,9 @@ interface LightList<V : Any> : LightDBData<V> {
 
     /**
      *
-     * 更改索引位置的数据
+     * 更新指定位置数据
      *
-     * 注意！如果索引无数据将修改失败且抛出异常
+     * 如果指定位置无数据将触发异常
      *
      * @param index Long 索引
      * @param element T 数据

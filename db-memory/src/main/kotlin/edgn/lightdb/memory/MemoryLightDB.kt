@@ -38,6 +38,7 @@ class MemoryLightDB : LightDB, MemoryRefresh {
         }
     }
 
+    @Synchronized
     override fun refresh() {
         listNamespace.values.forEach { it.refresh() }
         mapNamespace.values.forEach { it.refresh() }
@@ -46,8 +47,8 @@ class MemoryLightDB : LightDB, MemoryRefresh {
 
     @Synchronized
     override fun close() {
-        listNamespace.values.forEach { it.close() }
-        mapNamespace.values.forEach { it.close() }
-        setNamespace.values.forEach { it.close() }
+        listNamespace.values.forEach { it.clear() }
+        mapNamespace.values.forEach { it.clear() }
+        setNamespace.values.forEach { it.clear() }
     }
 }

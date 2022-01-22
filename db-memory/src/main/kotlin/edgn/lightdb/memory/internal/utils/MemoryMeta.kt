@@ -35,7 +35,11 @@ class MemoryMeta(private val name: String) : MemoryMetaData {
         }
 
     override fun expired(ttl: Long, unit: TimeUnit) = checkAvailable {
-        internalExpireDate.set(TimeUnit.SECONDS.convert(ttl, unit) + currentTime)
+        if (ttl < 0) {
+            internalExpireDate.set(0L)
+        } else {
+            internalExpireDate.set(TimeUnit.SECONDS.convert(ttl, unit) + currentTime)
+        }
     }
 
     override fun clearExpire() = checkAvailable {

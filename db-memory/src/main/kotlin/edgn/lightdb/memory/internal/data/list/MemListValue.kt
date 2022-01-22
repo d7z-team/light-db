@@ -42,12 +42,17 @@ class MemListValue<V : Any>(
         }
     }
 
+    @Throws(IndexOutOfBoundsException::class)
     override fun set(index: Long, element: V): V = meta.checkAvailable {
         container.set(index.toInt(), element)
     }
 
     override fun get(index: Long): Optional<V> = meta.checkAvailable {
-        Optional.ofNullable(container[index.toInt()])
+        try {
+            Optional.of(container[index.toInt()])
+        } catch (e: IndexOutOfBoundsException) {
+            Optional.empty()
+        }
     }
 
     override fun indexOf(element: V): Long = meta.checkAvailable {
