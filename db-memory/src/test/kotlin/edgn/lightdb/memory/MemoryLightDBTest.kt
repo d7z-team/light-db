@@ -30,7 +30,7 @@ internal class MemoryLightDBTest {
         assertNotEquals(named, def)
         named.getOrCreate("user", String::class, String::class).apply {
             put("init", "a")
-            assertEquals(get("init").get(), "init")
+            assertEquals(get("init").get(), "a")
             removeKey("init")
             assertEquals(get("init"), Optional.empty<String>())
         }
