@@ -20,9 +20,9 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+      - name: install depends
+        run: sudo apt update && sudo apt install redis-server -y && sudo /etc/init.d/redis-server start
       - name: chmod +x gradlew
         run: chmod +x gradlew
-      - name: Show Gradle Version
-        run: ./gradlew --version
       - name: Test with Gradle
-        run: ./gradlew test
+        run: ./gradlew clean test --info
