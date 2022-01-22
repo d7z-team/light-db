@@ -22,7 +22,7 @@ jobs:
           distribution: 'adopt'
       - name: install depends
         run: sudo apt update && sudo apt install redis-server -y && sudo /etc/init.d/redis-server start
-      - name: chmod +x gradlew
-        run: chmod +x gradlew
+      - name: set redis password to 'redis-password'
+        run: redis-cli config set requirepass redis-password
       - name: Test with Gradle
-        run: ./gradlew clean test --info
+        run: chmod +x gradlew && ./gradlew clean test
