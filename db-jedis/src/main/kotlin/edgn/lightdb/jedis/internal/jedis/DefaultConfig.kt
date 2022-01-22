@@ -10,7 +10,9 @@ import redis.clients.jedis.util.Pool
 object DefaultConfig {
     private val configLoaderUtils = ConfigLoaderUtils(
         HashMap<String, String>().apply {
-            System.getenv().forEach { (t, u) -> this[t.toString()] = u.toString() }
+            System.getenv().forEach { (t, u) ->
+                this[t.toString().lowercase().replace('_', '.')] = u.toString()
+            }
             System.getProperties().forEach { t, u -> this[t.toString()] = u.toString() }
         }
     )
