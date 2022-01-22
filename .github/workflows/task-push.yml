@@ -26,3 +26,5 @@ jobs:
         run: redis-cli config set requirepass redis-password
       - name: Test with Gradle
         run: chmod +x gradlew && ./gradlew clean test
+        env:
+          jedis.password: 'redis-password'

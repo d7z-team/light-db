@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 internal class DefaultJedisPoolTest {
     @Test
     fun testJedis() {
-        System.setProperty("jedis.password", "redis-password")
         val pool = DefaultJedisPool()
         pool.session {
             println(
