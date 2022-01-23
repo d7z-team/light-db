@@ -1,0 +1,7 @@
+jdk:
+  - openjdk11
+install:
+  - echo "Gradle Boot"
+  - chmod +x gradlew
+  - java --version
+  - ./gradlew clean -Pgroup=$GROUP -Pversion=$VERSION publishToMavenLocal -x test
