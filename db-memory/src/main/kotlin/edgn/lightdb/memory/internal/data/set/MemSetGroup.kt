@@ -36,9 +36,7 @@ class MemSetGroup : LightSetGroup, Clear, MemoryRefresh {
     }
 
     override fun refresh() {
-        container.removeIf {
-            it.available.not()
-        }
+        container.refresh()
     }
 
     override fun clear() {

@@ -82,7 +82,7 @@ class JedisListValue<V : Any>(
         Optional.ofNullable(
             jedis.eval(
                 """
-            if redis.call('llen' , KEYS[1]) < tonumber(ARGV[1]) then
+            if redis.call('llen' , KEYS[1]) <= tonumber(ARGV[1]) then
                return nil
             end
             local old_data = redis.call('lindex' , KEYS[1], ARGV[1])
@@ -97,12 +97,26 @@ class JedisListValue<V : Any>(
         ).map {
             covert.reduce(it, valueType)
         }.orElseThrow {
-            IndexOutOfBoundsException("index: $index > ${jedis.llen(groupKey)} ")
+            IndexOutOfBoundsException("index: $index > max: ${jedis.llen(groupKey) - 1} ")
         }
     }
 
     override fun get(index: Long): Optional<V> = meta.checkOrDefault(Optional.empty()) { jedis ->
-        Optional.ofNullable(covert.reduce(jedis.lindex(groupKey, index), valueType))
+        try {
+            Optional.ofNullable(covert.reduce(jedis.lindex(groupKey, index), valueType))
+        } catch (e: NullPointerException) {
+            // 未找到数据
+            Optional.empty()
+        }
+    }
+
+    fun testData(): Optional<String> = meta.checkOrDefault(Optional.empty()) { jedis ->
+        try {
+            Optional.ofNullable(jedis.lindex(groupKey, 0))
+        } catch (e: NullPointerException) {
+            // 未找到数据
+            Optional.empty()
+        }
     }
 
     override fun indexOf(element: V): Long = meta.checkAvailable { jedis ->

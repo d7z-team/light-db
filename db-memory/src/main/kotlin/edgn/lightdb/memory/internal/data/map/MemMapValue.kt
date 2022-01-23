@@ -20,6 +20,9 @@ class MemMapValue<K : Any, V : Any>(
 
     private val container = ConcurrentHashMap<K, V>()
 
+    override val isNotEmpty: Boolean
+        get() = container.isNotEmpty()
+
     override fun clear() {
         container.clear()
     }

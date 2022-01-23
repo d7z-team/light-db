@@ -49,8 +49,6 @@ class MemMapGroup : LightMapGroup, Clear, MemoryRefresh {
     }
 
     override fun refresh() {
-        container.removeIf {
-            it.available.not()
-        }
+        container.refresh()
     }
 }

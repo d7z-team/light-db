@@ -18,6 +18,9 @@ class MemSetValue<V : Any>(
     override val available: Boolean
         get() = meta.available
 
+    override val isNotEmpty: Boolean
+        get() = container.isNotEmpty()
+
     private val container = ConcurrentHashMap<V, Any>()
 
     override val size: Long

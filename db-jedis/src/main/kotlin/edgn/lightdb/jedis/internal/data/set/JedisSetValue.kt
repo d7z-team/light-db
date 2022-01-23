@@ -17,7 +17,7 @@ class JedisSetValue<V : Any>(
     override val meta = JedisMeta(groupKey = groupKey, pool = pool)
 
     override val size: Long
-        get() = meta.checkAvailable {
+        get() = meta.checkOrDefault(0) {
             it.scard(groupKey)
         }
 

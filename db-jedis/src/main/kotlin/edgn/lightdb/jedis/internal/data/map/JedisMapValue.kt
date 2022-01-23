@@ -32,7 +32,7 @@ class JedisMapValue<K : Any, V : Any>(
         val last = multi.hget(groupKey, nativeKey)
         multi.hset(groupKey, nativeKey, covert.format(value, valueType))
         multi.exec()
-        if (last != null) {
+        if (last.get() != null) {
             Optional.of(covert.reduce(last.get(), valueType))
         } else {
             Optional.empty<V>()
@@ -60,9 +60,9 @@ class JedisMapValue<K : Any, V : Any>(
         val result = it.eval(
             """
             local old_data = redis.call('hget' , KEYS[1], KEYS[2])
-            if old_data == ARGV[1] or old_data == nil then
+            if ARGV[1] == old_data or old_data == false  then
                 redis.call('hset' , KEYS[1], KEYS[2], ARGV[2])
-                return 1
+                return 1                
             else
                 return 0
             end

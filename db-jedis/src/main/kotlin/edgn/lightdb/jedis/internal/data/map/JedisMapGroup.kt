@@ -34,7 +34,6 @@ class JedisMapGroup(
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun <K : Any, V : Any> getOrCreate(
         key: String,
         keyType: KClass<K>,

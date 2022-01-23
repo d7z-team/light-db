@@ -4,7 +4,7 @@ import edgn.lightdb.api.structs.MetaData
 import java.util.concurrent.TimeUnit
 
 /**
- * jedis 相关配置
+ * jedis 子模块相关配置
  */
 interface JedisMetaData : MetaData {
     /**

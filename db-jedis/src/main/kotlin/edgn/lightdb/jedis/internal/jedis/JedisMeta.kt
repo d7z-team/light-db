@@ -21,7 +21,7 @@ class JedisMeta(
     }
 
     override fun clearExpire(): Unit = checkAvailable {
-        it.expire(groupKey, -1)
+        it.persist(groupKey)
     }
 
     fun <T : Any> checkAvailable(function: (Jedis) -> T): T = pool.session {

@@ -14,8 +14,4 @@ class ConfigLoaderUtils(private val source: Map<String, String>) {
     fun getInt(key: String, defaultValue: Int): Int {
         return source.getOrDefault(key, defaultValue.toString()).toIntOrNull() ?: defaultValue
     }
-
-    fun getLong(key: String, defaultValue: Long): Long {
-        return source.getOrDefault(key, defaultValue.toString()).toLongOrNull() ?: defaultValue
-    }
 }

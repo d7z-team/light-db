@@ -14,6 +14,9 @@ class MemListValue<V : Any>(
 
     override val meta: MemoryMeta = MemoryMeta(key)
 
+    override val isNotEmpty: Boolean
+        get() = container.isNotEmpty()
+
     private val container = Vector<V>()
 
     override val size: Long

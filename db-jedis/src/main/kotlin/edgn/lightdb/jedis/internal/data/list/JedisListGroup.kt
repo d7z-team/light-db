@@ -24,18 +24,28 @@ class JedisListGroup(
                     groupKey = keyCover,
                     valueType = wrap
                 )
-            )
+            ).filter { item ->
+                item.testData().map { data ->
+                    config.dataCovert.checkFormat(data, wrap)
+                }.orElse(true)
+            }
         }
     }
 
     override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>): LightList<V> = pool.session {
-        val keyCover = keyCover(key)
-        JedisListValue(
+        val result = JedisListValue(
             pool = pool,
             config = config,
-            groupKey = keyCover,
+            groupKey = keyCover(key),
             valueType = wrap
         )
+        if (result.testData().map { data ->
+            config.dataCovert.checkFormat(data, wrap)
+        }.orElse(true).not()
+        ) {
+            throw ClassCastException("$wrap not support.")
+        }
+        result
     }
 
     override fun drop(key: String): Boolean = pool.session {

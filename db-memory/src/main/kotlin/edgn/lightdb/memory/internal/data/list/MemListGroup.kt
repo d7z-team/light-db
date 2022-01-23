@@ -40,8 +40,6 @@ class MemListGroup : LightListGroup, MemoryRefresh, Clear {
     }
 
     override fun refresh() {
-        container.removeIf {
-            it.available.not()
-        }
+        container.refresh()
     }
 }

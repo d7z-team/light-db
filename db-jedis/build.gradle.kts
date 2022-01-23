@@ -30,6 +30,9 @@ tasks.test {
     testLogging {
         events("passed", "skipped", "failed")
     }
+    if (System.getenv("JEDIS_PASSWORD") == null) {
+        this.environment["JEDIS_PASSWORD"] = "redis-password"
+    }
 }
 
 tasks.withType<KotlinCompile>().configureEach {
