@@ -1,11 +1,25 @@
-package edgn.lightdb.memory.internal.data.set
+package edgn.lightdb.jedis.internal.data.set
 
+import edgn.lightdb.jedis.internal.jedis.DefaultJedisPool
+import edgn.lightdb.jedis.options.JedisLightDBConfig
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import redis.clients.jedis.Jedis
 
-internal class MemSetValueTest {
-    private fun testContext(block: MemSetValue<InternalTest>.() -> Unit) {
-        block(MemSetValue("test-key", InternalTest::class))
+internal class JedisSetValueTest {
+    companion object {
+        private const val DEFAULT_KEY = "test-key"
+        private val CONFIG = JedisLightDBConfig()
+    }
+
+    private fun testContext(key: String = DEFAULT_KEY, block: JedisSetValue<InternalTest>.(Jedis) -> Unit) {
+        val pool = DefaultJedisPool()
+        pool.session {
+            it.del(key)
+            block(JedisSetValue(pool, CONFIG, key, InternalTest::class), it)
+            it.del(key)
+        }
+        pool.close()
     }
 
     data class InternalTest(

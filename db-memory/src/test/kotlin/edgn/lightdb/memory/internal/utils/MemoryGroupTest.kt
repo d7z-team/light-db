@@ -10,6 +10,7 @@ internal class MemoryGroupTest {
         override var available: Boolean,
         val name: String = ""
     ) : IDataModules {
+        override val isNotEmpty = true
         override fun clear() {
         }
     }

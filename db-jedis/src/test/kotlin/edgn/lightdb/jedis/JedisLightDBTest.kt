@@ -1,12 +1,12 @@
-package edgn.lightdb.memory
+package edgn.lightdb.jedis
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-internal class MemoryLightDBTest {
+internal class JedisLightDBTest {
 
-    private fun withContext(block: MemoryLightDB.() -> Unit) {
-        block(MemoryLightDB())
+    private fun withContext(block: JedisLightDB.() -> Unit) {
+        block(JedisLightDB())
     }
 
     @Test

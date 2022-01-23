@@ -13,77 +13,81 @@ internal class MemListGroupTest {
         block(MemListGroup())
     }
 
+    companion object {
+        private const val TEST_KEY = "DATA"
+    }
+
     @Test
     fun get() {
         testContext {
-            assertTrue(get("DATA", String::class).isEmpty)
-            getOrCreate("DATA", String::class)
-            assertTrue(get("DATA", String::class).isPresent)
-            assertTrue(get("DATA", Int::class).isEmpty)
-            drop("DATA")
-            assertTrue(get("DATA", String::class).isEmpty)
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
+            getOrCreate(TEST_KEY, String::class).add("data")
+            assertTrue(get(TEST_KEY, String::class).isPresent)
+            getOrCreate(TEST_KEY, String::class).clear()
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
+            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+            drop(TEST_KEY)
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
         }
     }
 
     @Test
     fun getOrCreate() {
         testContext {
-            assertTrue(get("DATA", String::class).isEmpty)
-            val data1 = getOrCreate("DATA", String::class)
-            assertTrue(get("DATA", String::class).isPresent)
-            val data2 = get("DATA", String::class).get()
-            assertTrue(get("DATA", Int::class).isEmpty)
-            assertEquals(data2, data1)
-            drop("DATA")
-            assertTrue(get("DATA", String::class).isEmpty)
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
+            getOrCreate(TEST_KEY, String::class).add("data")
+            assertTrue(get(TEST_KEY, String::class).isPresent)
+            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+            drop(TEST_KEY)
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
         }
     }
 
     @Test
     fun drop() {
         testContext {
-            assertTrue(get("DATA", String::class).isEmpty)
-            getOrCreate("DATA", String::class)
-            assertTrue(get("DATA", String::class).isPresent)
-            assertTrue(get("DATA", Int::class).isEmpty)
-            drop("DATA")
-            assertTrue(get("DATA", String::class).isEmpty)
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
+            getOrCreate(TEST_KEY, String::class).add("data")
+            assertTrue(get(TEST_KEY, String::class).isPresent)
+            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+            drop(TEST_KEY)
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
         }
     }
 
     @Test
     fun exists() {
         testContext {
-            assertTrue(get("DATA", String::class).isEmpty)
-            getOrCreate("DATA", String::class)
-            assertTrue(get("DATA", String::class).isPresent)
-            assertTrue(get("DATA", Int::class).isEmpty)
-            drop("DATA")
-            assertFalse(exists("DATA"))
+            assertTrue(get(TEST_KEY, String::class).isEmpty)
+            getOrCreate(TEST_KEY, String::class).add("data")
+            assertTrue(get(TEST_KEY, String::class).isPresent)
+            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+            drop(TEST_KEY)
+            assertFalse(exists(TEST_KEY))
         }
     }
 
     @Test
     fun clear() {
         testContext {
-            getOrCreate("DATA", String::class)
-            assertTrue(get("DATA", String::class).isPresent)
+            getOrCreate(TEST_KEY, String::class).add("data")
+            assertTrue(get(TEST_KEY, String::class).isPresent)
             clear()
-            assertFalse(exists("DATA"))
+            assertFalse(exists(TEST_KEY))
         }
     }
 
     @Test
     fun refresh() {
         testContext {
-            getOrCreate("DATA", String::class)
+            getOrCreate(TEST_KEY, String::class)
             assertEquals(container.size, 1)
-            getOrCreate("DATA", String::class)
+            getOrCreate(TEST_KEY, String::class)
                 .metaOrThrows<MemoryMetaData, String>()
                 .expired(-1, TimeUnit.SECONDS)
             refresh()
             assertEquals(container.size, 0)
-            val list = getOrCreate("DATA", String::class)
+            val list = getOrCreate(TEST_KEY, String::class)
             assertEquals(container.size, 1)
             list.metaOrNull<MemoryMetaData, String>()
                 .get()

@@ -1,20 +1,24 @@
-package edgn.lightdb.memory.internal.data.set
+package edgn.lightdb.jedis.internal.data.set
 
-import edgn.lightdb.api.utils.metaOrNull
-import edgn.lightdb.api.utils.metaOrThrows
-import edgn.lightdb.memory.MemoryMetaData
-import org.junit.jupiter.api.Assertions.*
+import edgn.lightdb.jedis.internal.jedis.DefaultJedisPool
+import edgn.lightdb.jedis.options.JedisLightDBConfig
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import java.util.concurrent.TimeUnit
 
-internal class MemSetGroupTest {
-
-    private fun testContext(block: MemSetGroup.() -> Unit) {
-        block(MemSetGroup())
-    }
-
+internal class JedisSetGroupTest {
     companion object {
         private const val TEST_KEY = "DATA"
+    }
+
+    private fun testContext(block: JedisSetGroup.() -> Unit) {
+
+        val pool = DefaultJedisPool()
+        pool.resource.run {
+            del("set:test:$TEST_KEY")
+            block(JedisSetGroup("test", pool, JedisLightDBConfig()))
+            del("set:test:$TEST_KEY")
+        }
     }
 
     @Test
@@ -25,7 +29,7 @@ internal class MemSetGroupTest {
             assertTrue(get(TEST_KEY, String::class).isPresent)
             getOrCreate(TEST_KEY, String::class).clear()
             assertTrue(get(TEST_KEY, String::class).isEmpty)
-            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+//            assertTrue(get(TEST_KEY, Int::class).isEmpty)
             drop(TEST_KEY)
             assertTrue(get(TEST_KEY, String::class).isEmpty)
         }
@@ -37,7 +41,7 @@ internal class MemSetGroupTest {
             assertTrue(get(TEST_KEY, String::class).isEmpty)
             getOrCreate(TEST_KEY, String::class).add("data")
             assertTrue(get(TEST_KEY, String::class).isPresent)
-            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+//            assertTrue(get(TEST_KEY, Int::class).isEmpty)
             drop(TEST_KEY)
             assertTrue(get(TEST_KEY, String::class).isEmpty)
         }
@@ -49,7 +53,7 @@ internal class MemSetGroupTest {
             assertTrue(get(TEST_KEY, String::class).isEmpty)
             getOrCreate(TEST_KEY, String::class).add("data")
             assertTrue(get(TEST_KEY, String::class).isPresent)
-            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+//            assertTrue(get(TEST_KEY, Int::class).isEmpty)
             drop(TEST_KEY)
             assertTrue(get(TEST_KEY, String::class).isEmpty)
         }
@@ -61,40 +65,9 @@ internal class MemSetGroupTest {
             assertTrue(get(TEST_KEY, String::class).isEmpty)
             getOrCreate(TEST_KEY, String::class).add("data")
             assertTrue(get(TEST_KEY, String::class).isPresent)
-            assertTrue(get(TEST_KEY, Int::class).isEmpty)
+//            assertTrue(get(TEST_KEY, Int::class).isEmpty)
             drop(TEST_KEY)
             assertFalse(exists(TEST_KEY))
-        }
-    }
-
-    @Test
-    fun clear() {
-        testContext {
-            getOrCreate(TEST_KEY, String::class).add("data")
-            assertTrue(get(TEST_KEY, String::class).isPresent)
-            clear()
-            assertFalse(exists(TEST_KEY))
-        }
-    }
-
-    @Test
-    fun refresh() {
-        testContext {
-            getOrCreate(TEST_KEY, String::class)
-            assertEquals(container.size, 1)
-            getOrCreate(TEST_KEY, String::class)
-                .metaOrThrows<MemoryMetaData, String>()
-                .expired(-1, TimeUnit.SECONDS)
-            refresh()
-            assertEquals(container.size, 0)
-            val list = getOrCreate(TEST_KEY, String::class)
-            assertEquals(container.size, 1)
-            list.metaOrNull<MemoryMetaData, String>()
-                .get()
-                .expired(1, TimeUnit.SECONDS)
-            Thread.sleep(2000)
-            refresh()
-            assertEquals(0, container.size)
         }
     }
 }
