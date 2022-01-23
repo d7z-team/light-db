@@ -5,7 +5,7 @@
 <a href="https://jitpack.io/#OpenEdgn/LightDB" target="_blank"> <img alt="JitPack" src="https://img.shields.io/jitpack/v/github/OpenEdgn/LightDB"></a>
 
 
-> LightDB 是一套轻量级消息缓存中间件模块
+> LightDB 是一套轻量级数据缓存模块.
 
 ## 特性
 
@@ -14,7 +14,16 @@
 
 ## 快速开始
 
+请查看各个模块的 `Test` 用例。
+
+如何引入项目请参照 [Jitpack](https://jitpack.io/#OpenEdgn/LightDB).
+
 ## 更新日志
+
+- [0.0.1](https://github.com/OpenEdgn/LightDB/releases/tag/0.0.1) 第一个技术预览版
+  - 内存实现
+  - redis 后端实现
+  - 支持 List 、Set 、Map
 
 ## LICENSE
 
