@@ -2,7 +2,6 @@ package edgn.lightdb.jedis.internal.utils
 
 import org.json.JSONObject
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 internal class JsonDataCovertUtilsTest {
@@ -28,14 +27,5 @@ internal class JsonDataCovertUtilsTest {
         val json = reduce.format(data)
         assertEquals(reduce.reduce(json, TestA::class), data)
         assertEquals(reduce.reduce("String Test", String::class), "String Test")
-    }
-
-    @Test
-    fun checkFormat() {
-        val check = JsonDataCovertUtils()
-        val data = TestA("date", "now")
-        val json = check.format(data)
-        assertTrue(check.checkFormat(json, TestA::class))
-        assertTrue(check.checkFormat("data", String::class))
     }
 }
