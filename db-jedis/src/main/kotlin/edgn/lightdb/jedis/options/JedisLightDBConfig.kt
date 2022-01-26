@@ -13,6 +13,18 @@ data class JedisLightDBConfig(
     /**
      * 对象 <==> 字符串 转换器
      */
-    val dataCovert: DataCovert = JsonDataCovertUtils()
+    val dataCovert: DataCovert = JsonDataCovertUtils(),
 
-)
+    /**
+     * 配置全局命名空间
+     */
+    val namespace: String = ""
+) {
+    val redisHeader by lazy {
+        if (namespace.isEmpty()) {
+            ""
+        } else {
+            "$namespace:"
+        }
+    }
+}

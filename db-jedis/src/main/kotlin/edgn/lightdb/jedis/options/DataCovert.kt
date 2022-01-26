@@ -20,13 +20,6 @@ interface DataCovert {
     fun <T : Any> reduce(format: String, clazz: KClass<T>): T
 
     /**
-     *  字符串完整性校验
-     *
-     *  如果字符串无法转换成对应实体则返回 false
-     */
-    fun checkFormat(format: String, clazz: KClass<out Any>): Boolean
-
-    /**
      * 数据转换异常
      */
     class CovertErrorException(msg: String, e: Exception? = null) : LightDBException(msg, e)

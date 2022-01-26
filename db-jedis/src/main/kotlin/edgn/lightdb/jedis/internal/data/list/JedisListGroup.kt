@@ -46,6 +46,6 @@ class JedisListGroup(
     }
 
     private fun keyCover(key: String): String {
-        return "list:$name:$key"
+        return "${config.redisHeader}list:$name:$key"
     }
 }

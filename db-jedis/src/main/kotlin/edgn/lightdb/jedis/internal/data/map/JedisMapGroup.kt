@@ -58,6 +58,6 @@ class JedisMapGroup(
     }
 
     private fun keyCover(key: String): String {
-        return "hash:$name:$key"
+        return "${config.redisHeader}hash:$name:$key"
     }
 }

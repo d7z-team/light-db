@@ -27,17 +27,6 @@ class JsonDataCovertUtils : DataCovert {
         return gson.toJson(JsonBean(type = clazz.java.name, data = data))
     }
 
-    override fun checkFormat(format: String, clazz: KClass<out Any>): Boolean {
-        if (String::class.isSubclassOf(clazz)) {
-            return true
-        }
-        return try {
-            JSONObject(format).getString("type") == clazz.java.name
-        } catch (e: Exception) {
-            false
-        }
-    }
-
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> reduce(format: String, clazz: KClass<T>): T {
         if (String::class.isSubclassOf(clazz)) {
