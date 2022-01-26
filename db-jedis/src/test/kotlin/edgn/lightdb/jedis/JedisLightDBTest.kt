@@ -1,12 +1,14 @@
 package edgn.lightdb.jedis
 
+import edgn.lightdb.jedis.options.JedisLightDBConfig
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class JedisLightDBTest {
 
     private fun withContext(block: JedisLightDB.() -> Unit) {
-        block(JedisLightDB())
+        val config = JedisLightDBConfig(namespace = "test")
+        block(JedisLightDB(config = config))
     }
 
     @Test
