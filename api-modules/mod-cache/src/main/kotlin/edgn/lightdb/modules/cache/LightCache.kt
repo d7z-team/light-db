@@ -5,6 +5,8 @@ import edgn.lightdb.api.utils.LightDBLoader
 import edgn.lightdb.modules.cache.api.ILightCache
 import edgn.lightdb.modules.cache.api.IMultipleCacheContent
 import edgn.lightdb.modules.cache.api.ISingleCacheContent
+import edgn.lightdb.modules.cache.internal.MultipleCacheContent
+import edgn.lightdb.modules.cache.internal.SingleCacheContent
 import kotlin.reflect.KClass
 
 /**
@@ -19,18 +21,16 @@ import kotlin.reflect.KClass
  */
 class LightCache(
     private val mapGroup: LightMapGroup = LightDBLoader.load().withMap("cache"),
-    private val config: LightCacheConfig = LightCacheConfig.Builder().build()
 ) : ILightCache {
     override fun <K : Any, V : Any> singleCacheGroup(
         name: String,
         keyType: KClass<K>,
-        valueType: KClass<V>
+        valueType: KClass<V>,
     ): ISingleCacheContent<K, V> {
-
-        TODO()
+        return SingleCacheContent(name, keyType, valueType, mapGroup)
     }
 
     override fun <V : Any> multipleCacheGroup(name: String, valueType: KClass<V>): IMultipleCacheContent<V> {
-        TODO("Not yet implemented")
+        return MultipleCacheContent(name, valueType, mapGroup)
     }
 }
