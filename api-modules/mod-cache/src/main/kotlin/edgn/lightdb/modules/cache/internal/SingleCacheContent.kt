@@ -20,7 +20,7 @@ open class SingleCacheContent<K : Any, V : Any>(
         return cacheContainer.getOrCreate(group, keyType, valueType).putIfAbsent(key, value)
     }
 
-    override fun restore(key: K): Boolean {
+    override fun remove(key: K): Boolean {
         return cacheContainer.getOrCreate(group, keyType, valueType).removeKey(key).isPresent
     }
 

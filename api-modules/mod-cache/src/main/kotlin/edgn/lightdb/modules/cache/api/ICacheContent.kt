@@ -33,7 +33,7 @@ interface ICacheContent<K : Any, V : Any> {
      * @param key K 入参
      * @return Boolean 如果缓存存在且删除则返回 true 否则 false
      */
-    fun restore(key: K): Boolean
+    fun remove(key: K): Boolean
 
     /**
      * 获取缓存
