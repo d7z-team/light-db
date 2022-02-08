@@ -7,6 +7,6 @@ import kotlin.reflect.KClass
 
 class MultipleCacheContent<V : Any>(
     override val group: String,
-    private val valueType: KClass<V>,
-    private val cacheContainer: LightMapGroup,
+    valueType: KClass<V>,
+    cacheContainer: LightMapGroup,
 ) : IMultipleCacheContent<V>, SingleCacheContent<IMultipleKey, V>(group, IMultipleKey::class, valueType, cacheContainer)

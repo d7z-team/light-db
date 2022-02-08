@@ -26,17 +26,27 @@ class CacheContext<K : Any, V : Any>(
         return this
     }
 
-    override fun execute(): V {
-        val data = content.get(key)
-        if (data.isPresent) {
-            return data.get()
-        }
-        val item = invoke() ?: defaultValue.get().orElseThrow() // 执行缓存方法，如不存在则使用默认值
-        content.saveIfAbsent(key, item)
-        return item
+    override fun execute(defaultFun: () -> V): V {
+        return content.get(key).or {
+            val funcResult = invoke() // 无缓存，执行业务拉取缓存
+            if ((funcResult != null) && filterList.all { it(funcResult) }) { // 缓存通过过滤器
+                content.saveIfAbsent(key, funcResult)
+                Optional.of(funcResult) // 数据缓存
+            } else if (funcResult != null) {
+                Optional.of(funcResult) // 如果 funcRes 不为空则表示被拦截器拦截，此时数据不缓存
+            } else {
+                val def = defaultValue.get()
+                if (def.isPresent) {
+                    content.saveIfAbsent(key, def.get()) // 缓存默认值
+                    Optional.of(def.get())
+                } else {
+                    Optional.empty() // 无缓存无默认值
+                }
+            }
+        }.orElseGet(defaultFun)
     }
 
     override fun execute(defaultReturn: V): V {
-        return content.get(key).orElse(defaultReturn)
+        return execute { defaultReturn }
     }
 }

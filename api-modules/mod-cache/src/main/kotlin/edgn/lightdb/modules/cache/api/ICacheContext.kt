@@ -31,7 +31,7 @@ interface ICacheContext<K, V> {
      * @return V 对应结果
      */
     @Throws(NoSuchElementException::class)
-    fun execute(): V
+    fun execute(defaultFun: () -> V = { throw java.util.NoSuchElementException("No value present") }): V
 
     /**
      *

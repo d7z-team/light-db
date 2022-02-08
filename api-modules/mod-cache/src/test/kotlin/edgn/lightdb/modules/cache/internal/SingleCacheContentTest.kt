@@ -8,7 +8,7 @@ import edgn.lightdb.modules.cache.utils.singleCacheGroup
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class CacheContextTest {
+internal class SingleCacheContentTest {
 
     @Test
     fun test() {
@@ -31,7 +31,8 @@ internal class CacheContextTest {
 
         fun get(name: String): String = content.cacheContext(name) {
             dataSource[name]
-        }.default("ERROR").execute()
+        }.filter { it.startsWith("d") }
+            .default("ERROR").execute()
 
         fun set(name: String, value: String) = content.cacheWriteContext(name) {
             dataSource[name] = value
