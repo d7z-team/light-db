@@ -1,10 +1,10 @@
 
-module edgn.lightdb.modules.cache {
+module org.d7z.light.db.modules.cache {
     requires kotlin.reflect;
     requires org.slf4j;
     requires kotlin.stdlib;
-    requires edgn.lightdb.api;
-    exports edgn.lightdb.modules.cache;
-    exports edgn.lightdb.modules.cache.api;
-    exports edgn.lightdb.modules.cache.utils;
+    requires org.d7z.light.db.api;
+    exports org.d7z.light.db.modules.cache;
+    exports org.d7z.light.db.modules.cache.api;
+    exports org.d7z.light.db.modules.cache.utils;
 }

@@ -1,14 +1,14 @@
-import edgn.lightdb.api.LightDB;
+import org.d7z.light.db.api.LightDB;
 
-module edgn.lightdb.api {
+module org.d7z.light.db.api {
     requires kotlin.reflect;
     requires kotlin.stdlib;
     uses LightDB;
-    opens edgn.lightdb.api;
-    exports edgn.lightdb.api;
-    exports edgn.lightdb.api.structs;
-    exports edgn.lightdb.api.structs.list;
-    exports edgn.lightdb.api.structs.set;
-    exports edgn.lightdb.api.structs.map;
-    exports edgn.lightdb.api.utils;
+    opens org.d7z.light.db.api;
+    exports org.d7z.light.db.api;
+    exports org.d7z.light.db.api.structs;
+    exports org.d7z.light.db.api.structs.list;
+    exports org.d7z.light.db.api.structs.set;
+    exports org.d7z.light.db.api.structs.map;
+    exports org.d7z.light.db.api.utils;
 }

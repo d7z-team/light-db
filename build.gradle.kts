@@ -1,4 +1,4 @@
-group = "com.github.OpenEDGN"
+group = "com.github.d7z-team"
 version = "last"
 
 buildscript {

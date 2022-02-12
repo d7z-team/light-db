@@ -18,8 +18,6 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation(project(":db-api"))
-    implementation("org.slf4j:slf4j-api:2.0.0-alpha5")
-    testImplementation("org.slf4j:slf4j-simple:2.0.0-alpha5")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
 }

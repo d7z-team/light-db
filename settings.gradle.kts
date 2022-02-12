@@ -1,4 +1,4 @@
-rootProject.name = "LightDB"
+rootProject.name = "light-db"
 include("db-api")
 include("db-jedis")
 include("db-memory")

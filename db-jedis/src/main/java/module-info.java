@@ -1,14 +1,14 @@
-import edgn.lightdb.api.LightDB;
-import edgn.lightdb.jedis.JedisLightDB;
+import org.d7z.light.db.api.LightDB;
+import org.d7z.light.db.jedis.JedisLightDB;
 
-module edgn.lightdb.jedis {
+module org.d7z.light.db.jedis {
     requires kotlin.reflect;
     requires kotlin.stdlib;
-    requires transitive edgn.objects.format.core;
-    requires edgn.objects.format.ext.json;
+    requires transitive org.d7z.objects.format.core;
+    requires org.d7z.objects.format.ext.json;
+    requires org.d7z.light.db.api;
     requires redis.clients.jedis;
-    requires edgn.lightdb.api;
-    exports edgn.lightdb.jedis;
-    exports edgn.lightdb.jedis.options;
+    exports org.d7z.light.db.jedis;
+    exports org.d7z.light.db.jedis.options;
     provides LightDB with JedisLightDB;
 }

@@ -1,12 +1,11 @@
-import edgn.lightdb.api.LightDB;
-import edgn.lightdb.memory.MemoryLightDB;
+import org.d7z.light.db.api.LightDB;
+import org.d7z.light.db.memory.MemoryLightDB;
 
-module edgn.lightdb.memory {
+module org.d7z.light.db.memory {
     requires kotlin.reflect;
-    requires org.slf4j;
     requires kotlin.stdlib;
-    requires edgn.lightdb.api;
-    opens edgn.lightdb.memory;
-    exports edgn.lightdb.memory;
+    requires org.d7z.light.db.api;
+    opens org.d7z.light.db.memory;
+    exports org.d7z.light.db.memory;
     provides LightDB with MemoryLightDB;
 }

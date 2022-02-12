@@ -3,7 +3,7 @@ name: LightDB CI
 on:
   push:
     branches:
-      - master
+      - main
   release:
     types: [ published, created, edited ]
 permissions:
@@ -22,7 +22,7 @@ jobs:
           distribution: 'adopt'
       - name: install depends
         run: sudo apt update && sudo apt install redis-server -y && sudo /etc/init.d/redis-server start
-      - name: set redis password to 'redis-password'
+      - name: set redis password
         run: redis-cli config set requirepass redis-password
       - name: Test with Gradle
         run: export JEDIS_PASSWORD=redis-password &&  chmod +x gradlew && ./gradlew clean test

@@ -16,8 +16,8 @@ java {
 
 dependencies {
     implementation("redis.clients:jedis:4.0.1")
-    implementation("com.github.OpenEdgn.ObjectFormat:format-core:0.1.0")
-    implementation("com.github.OpenEdgn.ObjectFormat:format-extra-json:0.1.0")
+    implementation("com.github.d7z-team.object-format:format-core:0.1.0")
+    implementation("com.github.d7z-team.object-format:format-extra-json:0.1.0")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation(project(":db-api"))
