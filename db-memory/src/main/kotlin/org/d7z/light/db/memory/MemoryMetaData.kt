@@ -1,12 +1,12 @@
 package org.d7z.light.db.memory
 
-import org.d7z.light.db.api.structs.MetaData
+import org.d7z.light.db.api.utils.meta.ExpireMetaData
 import java.util.concurrent.TimeUnit
 
 /**
  *  Memory LightDB 下数据配置
  */
-interface MemoryMetaData : MetaData {
+interface MemoryMetaData : ExpireMetaData {
     /**
      * 剩余过期时间 (秒)
      *
@@ -16,15 +16,15 @@ interface MemoryMetaData : MetaData {
      * - 等于 0 : 表示已经过期或者即将过期
      * - 等于 -1: 表示此数据无过期时间
      */
-    val ttl: Long
+    override val ttl: Long
 
     /**
      * 配置数据过期时间
      */
-    fun expired(ttl: Long, unit: TimeUnit)
+    override fun expired(ttl: Long, unit: TimeUnit)
 
     /**
      * 清除过期时间
      */
-    fun clearExpire()
+    override fun clearExpire()
 }

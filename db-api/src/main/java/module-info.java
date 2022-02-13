@@ -11,4 +11,5 @@ module org.d7z.light.db.api {
     exports org.d7z.light.db.api.structs.set;
     exports org.d7z.light.db.api.structs.map;
     exports org.d7z.light.db.api.utils;
+    exports org.d7z.light.db.api.utils.meta;
 }

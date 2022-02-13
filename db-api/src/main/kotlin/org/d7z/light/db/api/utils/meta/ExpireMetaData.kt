@@ -1,12 +1,12 @@
-package org.d7z.light.db.jedis.options
+package org.d7z.light.db.api.utils.meta
 
 import org.d7z.light.db.api.structs.MetaData
 import java.util.concurrent.TimeUnit
 
 /**
- * jedis 子模块相关配置
+ *  过期时间配置元数据
  */
-interface JedisMetaData : MetaData {
+interface ExpireMetaData : MetaData {
     /**
      * 剩余过期时间
      *

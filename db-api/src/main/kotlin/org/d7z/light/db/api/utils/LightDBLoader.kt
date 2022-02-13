@@ -22,7 +22,7 @@ object LightDBLoader {
         }
         val spi = ServiceLoader.load(LightDB::class.java)
         spi.findFirst().orElseThrow {
-            RuntimeException("未在类路径下找到可用的LightDB实现.")
+            RuntimeException("未在类路径下找到可用的 LightDB 实现.")
         }
     }
 

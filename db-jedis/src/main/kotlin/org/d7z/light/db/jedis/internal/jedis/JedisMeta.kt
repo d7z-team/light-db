@@ -1,7 +1,7 @@
 package org.d7z.light.db.jedis.internal.jedis
 
 import org.d7z.light.db.api.DestroyException
-import org.d7z.light.db.jedis.options.JedisMetaData
+import org.d7z.light.db.api.utils.meta.ExpireMetaData
 import org.d7z.light.db.jedis.options.JedisPool
 import redis.clients.jedis.Jedis
 import java.util.Optional
@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit
 
 class JedisMeta(
     private val groupKey: String,
-    private val pool: JedisPool
-) : JedisMetaData {
+    private val pool: JedisPool,
+) : ExpireMetaData {
     override val ttl: Long
         get() = checkAvailable {
             it.ttl(groupKey)

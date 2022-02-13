@@ -4,7 +4,7 @@ import org.d7z.light.db.jedis.JedisLightDB;
 module org.d7z.light.db.jedis {
     requires kotlin.reflect;
     requires kotlin.stdlib;
-    requires transitive org.d7z.objects.format.core;
+    requires transitive org.d7z.objects.format.all;
     requires org.d7z.objects.format.ext.json;
     requires org.d7z.light.db.api;
     requires redis.clients.jedis;
