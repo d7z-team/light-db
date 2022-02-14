@@ -12,7 +12,7 @@ class JedisMapValue<K : Any, V : Any>(
     config: JedisLightDBConfig,
     private val groupKey: String,
     override val keyType: KClass<K>,
-    override val valueType: KClass<V>
+    override val valueType: KClass<V>,
 ) : LightMap<K, V> {
 
     override val meta = JedisMeta(groupKey, pool)

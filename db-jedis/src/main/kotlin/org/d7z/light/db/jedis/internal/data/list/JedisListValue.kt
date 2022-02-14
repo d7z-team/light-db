@@ -23,9 +23,7 @@ class JedisListValue<V : Any>(
         }
 
     override fun clear(): Unit = meta.checkOrDefault(Unit) {
-        it.multi().apply {
-            del(groupKey)
-        }.exec()
+        it.del(groupKey)
     }
 
     override fun add(element: V): Unit = meta.session {

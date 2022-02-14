@@ -26,6 +26,8 @@ interface LightDBData<T : Any> {
 
     /**
      * 清空实例下所有数据
+     *
+     * 注意，清空内容可能会被标记
      */
     fun clear()
 }
