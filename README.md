@@ -20,6 +20,10 @@
 
 ## 更新日志
 
+- [0.1.0](https://github.com/d7z-team/light-db/releases/tag/0.1.0) 新增Session、Cache
+  - 新增 Session 实现
+  - 新增 Cache 实现
+
 - [0.0.1](https://github.com/d7z-team/light-db/releases/tag/0.0.1) 第一个技术预览版
   - 内存实现
   - redis 后端实现

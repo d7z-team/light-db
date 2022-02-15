@@ -10,7 +10,7 @@
 
 ### Api
 
-- [ ] 补充各个公共方法的API描述
+- [X] 补充各个公共方法的API描述
 
 ### Memory
 
@@ -20,3 +20,13 @@
 ### Redis
 
 - [ ] 预防同 key 不同 class 导致的 ClassCast 问题
+
+### Module
+
+#### Cache
+
+- [ ] 覆盖更加完善的测试
+
+#### Session
+
+- [ ] 覆盖更加完善的测试
