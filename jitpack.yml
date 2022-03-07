@@ -4,5 +4,6 @@ install:
   - echo "Gradle Boot"
   - chmod +x gradlew
   - java --version
-  - echo "command > gradlew clean -Pgroup=$GROUP -Pversion=$VERSION publishToMavenLocal -x test"
-  - ./gradlew clean -Pversion=$VERSION publishToMavenLocal -x test
+  - env
+  - echo "command > gradlew clean -Pgroup=$GROUP-$ARTIFACT -Pversion=$VERSION publishToMavenLocal -x test"
+  - ./gradlew clean -Pgroup=$GROUP-$ARTIFACT -Pversion=$VERSION publishToMavenLocal -x test
