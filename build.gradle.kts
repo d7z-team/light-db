@@ -1,3 +1,5 @@
+group = rootProject.property("group")!!
+version = rootProject.property("version")!!
 
 buildscript {
     repositories {

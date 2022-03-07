@@ -6,7 +6,6 @@ plugins {
 javaPlatform.allowDependencies()
 
 dependencies {
-
     constraints {
         rootProject.subprojects
             .filter { it.name != project.name }
@@ -20,10 +19,12 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("bom") {
-            groupId = rootProject.group.toString()
-            artifactId = project.name
-            version = rootProject.version.toString()
             from(components.getByName("javaPlatform"))
+//            groupId = rootProject.group.toString()
+//            artifactId = project.name
+//            version = rootProject.version.toString()
+            pom {
+            }
         }
     }
     repositories {
