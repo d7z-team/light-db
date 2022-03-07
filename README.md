@@ -18,6 +18,16 @@
 
 如何引入项目请参照 [Jitpack](https://jitpack.io/#d7z-team/light-db).
 
+或者你可以使用：
+
+```kotlin
+implementation(platform("com.github.d7z-team.light-db:bom:$lightDBVersion"))
+implementation("com.github.d7z-team.light-db:db-api")
+implementation("com.github.d7z-team.light-db:db-jedis")
+```
+
+其中，`$lightDBVersion` 是LightDB 的版本.
+
 ## 更新日志
 
 - [0.1.0](https://github.com/d7z-team/light-db/releases/tag/0.1.0) 新增Session、Cache
