@@ -20,11 +20,9 @@ publishing {
     publications {
         create<MavenPublication>("bom") {
             from(components.getByName("javaPlatform"))
-//            groupId = rootProject.group.toString()
-//            artifactId = project.name
-//            version = rootProject.version.toString()
-            pom {
-            }
+            groupId = rootProject.group.toString()
+            artifactId = project.name
+            version = rootProject.version.toString()
         }
     }
     repositories {
