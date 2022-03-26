@@ -1,6 +1,6 @@
 package org.d7z.light.db.memory
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.* // ktlint-disable no-wildcard-imports
 import org.junit.jupiter.api.Test
 
 internal class MemoryLightDBTest {
@@ -15,8 +15,9 @@ internal class MemoryLightDBTest {
         val named = withList("named")
         named.drop("user")
         assertNotEquals(named, def)
-        named.getOrCreate("user", String::class).apply {
-            add("init")
+        named.getOrCreate("user", String::class) {
+            "init"
+        }.apply {
             assertEquals(get(0).get(), "init")
             remove(0)
             assertTrue(named.get("user", String::class).isEmpty)
@@ -30,8 +31,9 @@ internal class MemoryLightDBTest {
         val named = withMap("named")
         named.drop("user")
         assertNotEquals(named, def)
-        named.getOrCreate("user", String::class, String::class).apply {
-            put("init", "a")
+        named.getOrCreate("user", String::class, String::class) {
+            "init" to "a"
+        }.apply {
             assertEquals(get("init").get(), "a")
             removeKey("init")
             assertTrue(named.get("user", String::class, String::class).isEmpty)
@@ -45,7 +47,9 @@ internal class MemoryLightDBTest {
         val named = withSet("named")
         named.drop("user")
         assertNotEquals(named, def)
-        named.getOrCreate("user", String::class).apply {
+        named.getOrCreate("user", String::class) {
+            "create"
+        }.apply {
             assertTrue(add("init"))
             assertFalse(add("init"))
             assertTrue(remove("init"))

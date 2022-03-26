@@ -7,15 +7,15 @@ import java.util.Optional
 
 class SessionGroupContext(
     private val lightSession: LightSession,
-    val groupName: String,
+    private val groupName: String,
     override val name: String,
 ) : ISessionGroupContext {
     override var survivalTime: Long = lightSession.globalTtl
+    val mapContext = lightSession.lightDB.withMap(groupName)
 
     override fun newSession(): ISessionContext {
-        val map = lightSession.lightDB.withMap(groupName)
         var key = lightSession.sessionIDGenerate.generate(name)
-        while (map.exists(key)) {
+        while (mapContext.exists(key)) {
             key = lightSession.sessionIDGenerate.generate(name)
         }
         return getOrCreateSession(key)
@@ -37,6 +37,6 @@ class SessionGroupContext(
     }
 
     override fun destroy(session: String): Boolean {
-        return lightSession.lightDB.withMap(groupName).drop(session)
+        return mapContext.drop(session)
     }
 }

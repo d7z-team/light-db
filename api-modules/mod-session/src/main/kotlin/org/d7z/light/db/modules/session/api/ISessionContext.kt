@@ -14,7 +14,7 @@ interface ISessionContext {
     /**
      * 会话 ID
      */
-    val sessionId: String
+    val sessionToken: String
 
     /**
      * 配置会话存活时间 (秒),如果配置小于0则立即过期
@@ -118,9 +118,4 @@ interface ISessionContext {
      * 刷新剩余过期时间
      */
     fun refresh()
-
-    /**
-     * 清空当前会话下所有配置 （不是销毁）
-     */
-    fun clear()
 }

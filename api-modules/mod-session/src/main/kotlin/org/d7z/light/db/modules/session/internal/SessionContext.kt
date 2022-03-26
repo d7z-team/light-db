@@ -1,6 +1,6 @@
 package org.d7z.light.db.modules.session.internal
 
-import org.d7z.light.db.api.structs.map.LightMap
+import org.d7z.light.db.api.struct.LightMap
 import org.d7z.light.db.modules.session.LightSession
 import org.d7z.light.db.modules.session.api.ISessionContext
 import org.d7z.light.db.modules.session.api.SessionException
@@ -9,26 +9,25 @@ import java.util.Optional
 import kotlin.reflect.KClass
 
 class SessionContext(
-    override val sessionId: String,
+    override val sessionToken: String,
     private val sessionGroup: SessionGroupContext,
     private val lightSession: LightSession,
 ) : ISessionContext {
     private val map: LightMap<String, String>
-        get() = lightSession.lightDB.withMap(sessionGroup.groupName).get(sessionId, String::class, String::class)
-            .orElseThrow { throw SessionException("Session: $sessionId 不存在.") }
-
-    private val notCheckMap: LightMap<String, String>
-        get() = lightSession.lightDB.withMap(sessionGroup.groupName)
-            .getOrCreate(sessionId, String::class, String::class)
+        get() = sessionGroup.mapContext.get(sessionToken, String::class, String::class)
+            .orElseThrow { throw SessionException("Session: $sessionToken 不存在.") }
 
     override var survivalTime: Long
-        get() = lightSession.expireHook.ttl(map)
+        get() = sessionGroup.mapContext.getTimeout(sessionToken)
         set(value) {
-            lightSession.expireHook.ttl(map, value)
+            sessionGroup.mapContext.setTimeout(sessionToken, value)
         }
 
     fun init() {
-        notCheckMap.putIfAbsent("createTime", lightSession.dataCovert.format(LocalDateTime.now()))
+        // 数据不存在 ，初始化
+        sessionGroup.mapContext.getOrCreate(sessionToken, String::class, String::class) {
+            Pair("createTime", lightSession.dataCovert.format(LocalDateTime.now()))
+        }
         updateTime = LocalDateTime.now()
         survivalTime = sessionGroup.survivalTime
     }
@@ -50,10 +49,5 @@ class SessionContext(
     override fun refresh() {
         updateTime = LocalDateTime.now()
         survivalTime = sessionGroup.survivalTime
-    }
-
-    override fun clear() {
-        map.clear()
-        init()
     }
 }

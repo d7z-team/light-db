@@ -1,6 +1,6 @@
 package org.d7z.light.db.jedis.internal.data.map
 
-import org.d7z.light.db.api.structs.map.LightMap
+import org.d7z.light.db.api.struct.LightMap
 import org.d7z.light.db.jedis.internal.jedis.JedisMeta
 import org.d7z.light.db.jedis.options.JedisLightDBConfig
 import org.d7z.light.db.jedis.options.JedisPool

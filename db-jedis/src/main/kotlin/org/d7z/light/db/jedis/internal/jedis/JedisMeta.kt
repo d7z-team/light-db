@@ -1,6 +1,6 @@
 package org.d7z.light.db.jedis.internal.jedis
 
-import org.d7z.light.db.api.DestroyException
+import org.d7z.light.db.api.error.DestroyException
 import org.d7z.light.db.api.utils.meta.ExpireMetaData
 import org.d7z.light.db.jedis.options.JedisPool
 import redis.clients.jedis.Jedis

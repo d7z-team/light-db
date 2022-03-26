@@ -1,6 +1,6 @@
 package org.d7z.light.db.jedis.options
 
-import org.d7z.light.db.api.LightDBException
+import org.d7z.light.db.api.error.LightDBException
 import kotlin.reflect.KClass
 
 /**

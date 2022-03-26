@@ -1,12 +1,12 @@
 package org.d7z.light.db.jedis
 
 import org.d7z.light.db.api.LightDB
-import org.d7z.light.db.api.structs.list.LightListGroup
-import org.d7z.light.db.api.structs.map.LightMapGroup
-import org.d7z.light.db.api.structs.set.LightSetGroup
-import org.d7z.light.db.jedis.internal.data.list.JedisListGroup
-import org.d7z.light.db.jedis.internal.data.map.JedisMapGroup
-import org.d7z.light.db.jedis.internal.data.set.JedisSetGroup
+import org.d7z.light.db.api.struct.ListContext
+import org.d7z.light.db.api.struct.MapContext
+import org.d7z.light.db.api.struct.SetContext
+import org.d7z.light.db.jedis.internal.data.list.JedisListContext
+import org.d7z.light.db.jedis.internal.data.map.JedisMapContext
+import org.d7z.light.db.jedis.internal.data.set.JedisSetContext
 import org.d7z.light.db.jedis.internal.jedis.DefaultJedisPool
 import org.d7z.light.db.jedis.options.JedisLightDBConfig
 import org.d7z.light.db.jedis.options.JedisPool
@@ -21,46 +21,46 @@ class JedisLightDB @JvmOverloads constructor(
 ) : LightDB {
 
     private val cachedMapGroup by lazy {
-        ConcurrentHashMap<String, LightMapGroup>()
+        ConcurrentHashMap<String, MapContext>()
     }
 
     private val cachedSetGroup by lazy {
-        ConcurrentHashMap<String, LightSetGroup>()
+        ConcurrentHashMap<String, SetContext>()
     }
 
     private val cachedListGroup by lazy {
-        ConcurrentHashMap<String, LightListGroup>()
+        ConcurrentHashMap<String, ListContext>()
     }
 
     override val name = "LightDB Jedis Support"
 
-    override fun withMap(name: String): LightMapGroup {
+    override fun withMap(name: String): MapContext {
         return if (config.cache) {
             cachedMapGroup.getOrPut(name) {
-                JedisMapGroup(name, pool, config)
+                JedisMapContext(name, pool, config)
             }
         } else {
-            JedisMapGroup(name, pool, config)
+            JedisMapContext(name, pool, config)
         }
     }
 
-    override fun withList(name: String): LightListGroup {
+    override fun withList(name: String): ListContext {
         return if (config.cache) {
             cachedListGroup.getOrPut(name) {
-                JedisListGroup(name, pool, config)
+                JedisListContext(name, pool, config)
             }
         } else {
-            JedisListGroup(name, pool, config)
+            JedisListContext(name, pool, config)
         }
     }
 
-    override fun withSet(name: String): LightSetGroup {
+    override fun withSet(name: String): SetContext {
         return if (config.cache) {
             cachedSetGroup.getOrPut(name) {
-                JedisSetGroup(name, pool, config)
+                JedisSetContext(name, pool, config)
             }
         } else {
-            JedisSetGroup(name, pool, config)
+            JedisSetContext(name, pool, config)
         }
     }
 

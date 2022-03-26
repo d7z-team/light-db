@@ -1,54 +1,67 @@
 package org.d7z.light.db.memory
 
 import org.d7z.light.db.api.LightDB
-import org.d7z.light.db.api.structs.list.LightListGroup
-import org.d7z.light.db.api.structs.map.LightMapGroup
-import org.d7z.light.db.api.structs.set.LightSetGroup
-import org.d7z.light.db.memory.internal.data.list.MemListGroup
-import org.d7z.light.db.memory.internal.data.map.MemMapGroup
-import org.d7z.light.db.memory.internal.data.set.MemSetGroup
+import org.d7z.light.db.api.struct.ListContext
+import org.d7z.light.db.api.struct.MapContext
+import org.d7z.light.db.api.struct.SetContext
+import org.d7z.light.db.memory.structs.list.MemListContext
+import org.d7z.light.db.memory.structs.map.MemMapContext
+import org.d7z.light.db.memory.structs.set.MemSetContext
+import java.util.Timer
+import java.util.TimerTask
 import java.util.concurrent.ConcurrentHashMap
 
 /**
  * LightDB 内存后端实现
+ *
+ * @property refreshTime Long 内部数据刷新时间
  */
-class MemoryLightDB : LightDB, MemoryRefresh {
+class MemoryLightDB @JvmOverloads constructor(
+    private val refreshTime: Long = 60,
+) : LightDB, TimerTask() {
 
-    private val listNamespace = ConcurrentHashMap<String, MemListGroup>()
-    private val mapNamespace = ConcurrentHashMap<String, MemMapGroup>()
-    private val setNamespace = ConcurrentHashMap<String, MemSetGroup>()
+    private val listNamespace = ConcurrentHashMap<String, MemListContext>()
+    private val mapNamespace = ConcurrentHashMap<String, MemMapContext>()
+    private val setNamespace = ConcurrentHashMap<String, MemSetContext>()
 
     override val name = "MemoryLightDB"
 
-    override fun withList(name: String): LightListGroup {
+    private val timer = Timer()
+
+    init {
+        timer.schedule(this, refreshTime * 1000, refreshTime * 1000)
+    }
+
+    override fun withList(name: String): ListContext {
         return listNamespace.getOrPut(key = name) {
-            MemListGroup()
+            MemListContext()
         }
     }
 
-    override fun withMap(name: String): LightMapGroup {
+    override fun withMap(name: String): MapContext {
         return mapNamespace.getOrPut(key = name) {
-            MemMapGroup()
+            MemMapContext()
         }
     }
 
-    override fun withSet(name: String): LightSetGroup {
+    override fun withSet(name: String): SetContext {
         return setNamespace.getOrPut(key = name) {
-            MemSetGroup()
+            MemSetContext()
         }
-    }
-
-    @Synchronized
-    override fun refresh() {
-        listNamespace.values.forEach { it.refresh() }
-        mapNamespace.values.forEach { it.refresh() }
-        setNamespace.values.forEach { it.refresh() }
     }
 
     @Synchronized
     override fun close() {
-        listNamespace.values.forEach { it.clear() }
-        mapNamespace.values.forEach { it.clear() }
-        setNamespace.values.forEach { it.clear() }
+        timer.cancel()
+        listNamespace.values.forEach { it.container.clear() }
+        mapNamespace.values.forEach { it.container.clear() }
+        setNamespace.values.forEach { it.container.clear() }
+    }
+
+    override fun run() {
+        // 刷新数据缓存
+        listNamespace.values.forEach { it.container.refresh() }
+        mapNamespace.values.forEach { it.container.refresh() }
+        setNamespace.values.forEach { it.container.refresh() }
     }
 }

@@ -1,6 +1,6 @@
 package org.d7z.light.db.jedis.internal.data.set
 
-import org.d7z.light.db.api.structs.set.LightSet
+import org.d7z.light.db.api.struct.LightSet
 import org.d7z.light.db.jedis.internal.jedis.JedisMeta
 import org.d7z.light.db.jedis.options.JedisLightDBConfig
 import org.d7z.light.db.jedis.options.JedisPool

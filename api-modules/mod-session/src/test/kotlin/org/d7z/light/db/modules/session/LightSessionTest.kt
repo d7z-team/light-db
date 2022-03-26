@@ -10,12 +10,12 @@ internal class LightSessionTest {
     fun findSessionGroupContext() {
         val build = LightSession.Builder().build()
         val newSession = build.findSessionGroupContext().newSession()
-        println(newSession.sessionId)
+        println(newSession.sessionToken)
         println(newSession.updateTime)
         val find = build.findSessionGroupContext()
-        val querySession = find.querySession(newSession.sessionId)
+        val querySession = find.querySession(newSession.sessionToken)
         assertEquals(querySession.get().createTime, newSession.createTime)
-        find.destroy(newSession.sessionId)
-        assertFalse(find.querySession(newSession.sessionId).isPresent)
+        find.destroy(newSession.sessionToken)
+        assertFalse(find.querySession(newSession.sessionToken).isPresent)
     }
 }

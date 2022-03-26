@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 internal class JedisMapGroupTest {
-    private fun testContext(block: JedisMapGroup.() -> Unit) {
+    private fun testContext(block: JedisMapContext.() -> Unit) {
         val pool = DefaultJedisPool()
         pool.resource.run {
             del("map:test:$TEST_KEY")
-            block(JedisMapGroup("test", pool, JedisLightDBConfig()))
+            block(JedisMapContext("test", pool, JedisLightDBConfig()))
             del("list:test:$TEST_KEY")
         }
     }

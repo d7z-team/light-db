@@ -47,9 +47,4 @@ interface ICacheContent<K : Any, V : Any> {
      * 根据入参判断缓存是否存在
      */
     fun exists(key: K): Boolean
-
-    /**
-     * 清除此分组下的所有缓存
-     */
-    fun clear()
 }

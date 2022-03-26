@@ -1,6 +1,6 @@
 package org.d7z.light.db.jedis.internal.jedis
 
-import org.d7z.light.db.api.DestroyException
+import org.d7z.light.db.api.error.DestroyException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test

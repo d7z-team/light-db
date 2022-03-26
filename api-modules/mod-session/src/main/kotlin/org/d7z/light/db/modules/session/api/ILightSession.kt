@@ -35,12 +35,6 @@ interface ILightSession {
         val container: LightDB
 
         /**
-         *
-         * 会话过期时间钩子配置
-         */
-        var expireHook: IExpireHook
-
-        /**
          * 配置类型转换器
          */
         var dataCovert: IDataCovert
@@ -48,7 +42,7 @@ interface ILightSession {
         /**
          * cache名称头部
          */
-        var nameHeader: String
+        var namespace: String
 
         /**
          * Session ID 生成规则

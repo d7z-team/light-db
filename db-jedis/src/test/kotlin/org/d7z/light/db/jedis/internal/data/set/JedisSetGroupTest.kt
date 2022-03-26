@@ -11,12 +11,12 @@ internal class JedisSetGroupTest {
         private const val TEST_KEY = "DATA"
     }
 
-    private fun testContext(block: JedisSetGroup.() -> Unit) {
+    private fun testContext(block: JedisSetContext.() -> Unit) {
 
         val pool = DefaultJedisPool()
         pool.resource.run {
             del("set:test:$TEST_KEY")
-            block(JedisSetGroup("test", pool, JedisLightDBConfig()))
+            block(JedisSetContext("test", pool, JedisLightDBConfig()))
             del("set:test:$TEST_KEY")
         }
     }
