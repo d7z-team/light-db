@@ -20,12 +20,13 @@ class JedisLightMap<K : Any, V : Any>(
             if redis.call('EXISTS',KEYS[1]) ~= 1 then
                 return 'LIGHT-DB-CHECK-NOT-FOUND'
             end
-            old_data = redis.call('HGET',KEYS[1],ARGV[1])
-            if old_data == nil then
+            local old_data = redis.call('HGET',KEYS[1],ARGV[1])
+            redis.call('HSET',KEYS[1],ARGV[1],ARGV[2])
+            if old_data == true then
+                return old_data
+            else
                 return 'LIGHT-DB-CHECK-VALUE-NOT-FOUND'
             end
-            redis.call('HSET',KEYS[1],ARGV[1],ARGV[2])
-            return old_data
             """.trimIndent(),
             1, name,
             dataCovert.format(key, keyType),
@@ -48,7 +49,7 @@ class JedisLightMap<K : Any, V : Any>(
                 return 'LIGHT-DB-CHECK-NOT-FOUND'
             end
             old_data = redis.call('HGET',KEYS[1],ARGV[1])
-           if old_data == nil then
+           if old_data == false then
                 redis.call('HSET',KEYS[1],ARGV[1],ARGV[2])
                 return 'LIGHT-DB-CHECK-VALUE-FOUND'
             end
@@ -113,7 +114,7 @@ class JedisLightMap<K : Any, V : Any>(
                 return 'LIGHT-DB-CHECK-NOT-FOUND'
              end
              local map_data = redis.call('hget',KEYS[1],ARGV[1])
-            if map_data == nil then
+            if map_data == false then
                 return 'LIGHT-DB-CHECK-VALUE-NOT-FOUND'
             end
             return map_data
@@ -137,7 +138,7 @@ class JedisLightMap<K : Any, V : Any>(
                 return 'LIGHT-DB-CHECK-NOT-FOUND'
              end
              local map_data = redis.call('hget',KEYS[1],ARGV[1])
-            if map_data == nil then
+            if map_data == false then
                 return 'LIGHT-DB-CHECK-VALUE-NOT-FOUND'
             end
             redis.call('hdel',KEYS[1],ARGV[1])
