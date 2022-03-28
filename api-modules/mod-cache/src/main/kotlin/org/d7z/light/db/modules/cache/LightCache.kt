@@ -16,8 +16,8 @@ import kotlin.reflect.KClass
  *
  */
 class LightCache(
-    private val lightDB: LightDB,
-    private val namespace: String,
+    private val lightDB: LightDB = LightDB,
+    private val namespace: String = "cache",
 ) : ILightCache {
     override fun <K : Any, V : Any> singleCacheGroup(
         name: String,

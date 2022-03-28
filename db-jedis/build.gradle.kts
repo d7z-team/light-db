@@ -15,12 +15,12 @@ java {
 }
 
 dependencies {
-    api("redis.clients:jedis:4.0.1")
-    api("com.github.d7z-team.object-format:format-all:0.2.0")
+    api("redis.clients:jedis:4.2.0")
+    api("com.github.d7z-team.object-format:format-all:0.3.0")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     api(project(":db-api"))
-    testImplementation("org.slf4j:slf4j-simple:1.7.32")
+    testImplementation("org.slf4j:slf4j-simple:1.7.36")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
 }

@@ -9,6 +9,5 @@ module org.d7z.light.db.jedis {
     requires org.d7z.light.db.api;
     requires redis.clients.jedis;
     exports org.d7z.light.db.jedis;
-    exports org.d7z.light.db.jedis.options;
     provides LightDB with JedisLightDB;
 }
