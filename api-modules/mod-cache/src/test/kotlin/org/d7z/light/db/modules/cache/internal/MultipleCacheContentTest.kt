@@ -14,7 +14,7 @@ internal class MultipleCacheContentTest {
 
     @Test
     fun save() {
-        LightCache().multipleCacheGroup("test", String::class).let {
+        LightCache().multipleCacheGroup("testM", String::class).let {
             it.save(keysOf("12", "23", "32"), "add")
             assertTrue(it.save(keysOf("12", "23", "34"), "add").isEmpty)
         }
@@ -34,7 +34,7 @@ internal class MultipleCacheContentTest {
     class MultipleService(lightCache: ILightCache) {
         private val map1 = HashMap<String, String>()
         private val map2 = HashMap<String, String>()
-        private val content = lightCache.multipleCacheGroup<String>("test")
+        private val content = lightCache.multipleCacheGroup<String>("multipleCacheGroup")
         fun get(key1: String, key2: String): String = content.cacheContext(key1, key2) {
             if (map1[key1] != map2[key2] || map1[key1] == null || map2[key2] == null) {
                 "NONE"

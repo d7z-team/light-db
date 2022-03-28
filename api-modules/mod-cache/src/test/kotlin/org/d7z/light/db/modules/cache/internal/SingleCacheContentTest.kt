@@ -26,7 +26,7 @@ internal class SingleCacheContentTest {
     }
 
     class TestService(lightCache: ILightCache) {
-        private val content = lightCache.singleCacheGroup<String, String>("test")
+        private val content = lightCache.singleCacheGroup<String, String>("singleCacheGroup")
         val dataSource = HashMap<String, String>() // dataSource
 
         fun get(name: String): String = content.cacheContext(name) {

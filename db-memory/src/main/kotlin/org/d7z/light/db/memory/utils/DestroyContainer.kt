@@ -25,15 +25,17 @@ class DestroyContainer<T : Any> {
     }
 
     fun getOrCreate(key: String, function: () -> T): T = writeLock.withLock {
-        val data = container.getOrElse(key) {
+        var data = container.getOrElse(key) {
             DataContainer(data = function())
         }
+        val child = data.data
         if (data.isAvailable().not()) {
             // 此数据生命周期已结束
             container.remove(key)
-            if (data.data is DestroyDataContainer) {
-                data.data.clear() // 销毁旧的数据
+            if (child is DestroyDataContainer) {
+                child.clear() // 销毁旧的数据
             }
+            data = DataContainer(data = function()) // 覆盖新的的数据
         }
         container[key] = data
         data.data
@@ -125,10 +127,13 @@ class DestroyContainer<T : Any> {
     }
 
     fun clear() = writeLock.withLock {
-        container.forEach { (t, u) ->
-            container.remove(t)
-            if (u.data is DestroyDataContainer) {
-                u.data.clear()
+        val iterator = container.iterator()
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            iterator.remove()
+            val data = next.value.data
+            if (data is DestroyDataContainer) {
+                data.clear()
             }
         }
     }
