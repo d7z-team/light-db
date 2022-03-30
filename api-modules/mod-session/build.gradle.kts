@@ -6,6 +6,8 @@ plugins {
 }
 java.sourceCompatibility = JavaVersion.VERSION_11
 
+val objectFormat: String by rootProject
+
 val compileKotlin: KotlinCompile by tasks
 val compileJava: JavaCompile by tasks
 compileJava.destinationDirectory.set(compileKotlin.destinationDirectory.get())
@@ -18,7 +20,7 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation(project(":db-api"))
-    api("com.github.d7z-team.object-format:format-all:0.2.0")
+    api("com.github.d7z-team.object-format:format-all:$objectFormat")
     implementation(project(":db-jedis"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")

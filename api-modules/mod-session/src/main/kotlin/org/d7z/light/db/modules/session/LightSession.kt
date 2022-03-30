@@ -8,7 +8,6 @@ import org.d7z.light.db.modules.session.api.ISessionIDGenerate
 import org.d7z.light.db.modules.session.api.SessionException
 import org.d7z.light.db.modules.session.internal.SessionGroupContext
 import org.d7z.light.db.modules.session.internal.SimpleSessionIdGenerate
-import org.d7z.objects.format.GlobalObjectFormat
 import org.d7z.objects.format.api.IDataCovert
 import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
@@ -37,7 +36,7 @@ class LightSession private constructor(
     class Builder(override val container: LightDB = LightDB) :
         ILightSession.Builder {
         override var namespace: String = "session"
-        override var dataCovert: IDataCovert = GlobalObjectFormat
+        override var dataCovert: IDataCovert = IDataCovert
         override var ttl: Long = 60 * 60
         override var sessionIDGenerate: ISessionIDGenerate = SimpleSessionIdGenerate()
 

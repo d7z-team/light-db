@@ -5,7 +5,7 @@ import kotlin.reflect.KClass
 
 class SetDataContainer<T : Any>(
     val type: KClass<T>,
-    val data: MutableSet<T>,
+    val data: MutableMap<T, Any>,
 ) : DestroyContainer.DestroyDataContainer {
     override val destroy: Boolean
         get() = data.isEmpty()

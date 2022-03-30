@@ -4,7 +4,7 @@ import org.d7z.light.db.api.struct.LightSet
 import org.d7z.light.db.api.struct.SetContext
 import org.d7z.light.db.memory.utils.DestroyContainer
 import java.util.Optional
-import java.util.concurrent.ConcurrentSkipListSet
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
@@ -26,8 +26,8 @@ class MemSetContext : SetContext {
     @Suppress("UNCHECKED_CAST")
     override fun <V : Any> getOrCreate(key: String, wrap: KClass<V>, create: () -> V): LightSet<V> {
         return container.getOrCreate(key) {
-            val data = ConcurrentSkipListSet<V>()
-            data.add(create())
+            val data = ConcurrentHashMap<V, Any>()
+            data[create()] = Any()
             SetDataContainer(wrap, data) as SetDataContainer<Any>
         }.let {
             if (it.type.isSubclassOf(wrap).not()) {

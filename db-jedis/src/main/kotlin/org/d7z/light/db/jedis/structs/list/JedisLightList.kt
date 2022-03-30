@@ -96,7 +96,7 @@ class JedisLightList<V : Any>(
             if redis.call('EXISTS',KEYS[1]) ~= 1 then
                 return 'LIGHT-DB-CHECK-NOT-FOUND'
             end
-            if redis.call('llen' , KEYS[1]) < tonumber(ARGV[1]) then
+            if redis.call('llen' , KEYS[1]) <= tonumber(ARGV[1]) then
                return 'LIGHT-DB-CHECK-VALUE-NOT-FOUND'
             end
             local old_data = redis.call('lindex' , KEYS[1], ARGV[1])

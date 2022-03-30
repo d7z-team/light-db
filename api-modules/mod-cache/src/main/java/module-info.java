@@ -1,7 +1,6 @@
 
 module org.d7z.light.db.modules.cache {
     requires kotlin.reflect;
-    requires org.slf4j;
     requires kotlin.stdlib;
     requires org.d7z.light.db.api;
     exports org.d7z.light.db.modules.cache;

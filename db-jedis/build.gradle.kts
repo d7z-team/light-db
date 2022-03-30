@@ -1,5 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val jedisVersion: String by rootProject
+val objectFormat: String by rootProject
+val slf4jVersion: String by rootProject
+
 plugins {
     kotlin("jvm")
     `maven-publish`
@@ -15,12 +19,15 @@ java {
 }
 
 dependencies {
-    api("redis.clients:jedis:4.2.0")
-    api("com.github.d7z-team.object-format:format-all:0.3.0")
+    api("redis.clients:jedis:$jedisVersion") {
+        exclude("com.google.code.gson", "gson")
+        exclude("org.slf4j", "slf4j-api")
+    }
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    api("com.github.d7z-team.object-format:format-all:$objectFormat")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     api(project(":db-api"))
-    testImplementation("org.slf4j:slf4j-simple:1.7.36")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
 }

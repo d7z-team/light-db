@@ -14,7 +14,7 @@
 
 ## 快速开始
 
-请查看各个模块的 `Test` 用例。
+请查看各个模块的 `Test` 用例,或者参考 [Test 模块](./db-test)。
 
 如何引入项目请参照 [Jitpack](https://jitpack.io/#d7z-team/light-db).
 
@@ -29,6 +29,14 @@ implementation("com.github.d7z-team.light-db:db-jedis")
 其中，`$lightDBVersion` 是LightDB 的版本.
 
 ## 更新日志
+
+- [0.3.0](https://github.com/d7z-team/light-db/releases/tag/0.3.0) 重构 API，**与 0.2.0 不兼容**
+  - api: 增加设置过期时间的 API，移除旧的 SPI 加载器
+  - memory: 重构 API
+  - jedis：重构 API，优化 jedis 原子操作
+
+- [0.2.0](https://github.com/d7z-team/light-db/releases/tag/0.2.0) 修复打包问题，新增批量依赖方案
+
 
 - [0.1.0](https://github.com/d7z-team/light-db/releases/tag/0.1.0) 新增Session、Cache
   - 新增 Session 实现

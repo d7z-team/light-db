@@ -5,13 +5,7 @@ plugins {
 }
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-val compileKotlin: KotlinCompile by tasks
-val compileJava: JavaCompile by tasks
-compileJava.destinationDirectory.set(compileKotlin.destinationDirectory.get())
-
-java {
-    modularity.inferModulePath.set(true)
-}
+val slf4jVersion: String by rootProject
 
 dependencies {
     implementation(kotlin("reflect"))
@@ -20,6 +14,8 @@ dependencies {
     implementation(project(":db-memory"))
     implementation(project(":db-jedis"))
     implementation("com.github.d7z-team.logger4k:logger-core:0.2.1")
+    implementation("com.github.d7z-team.logger4k:logger-forward:0.2.1")
+    implementation("org.slf4j:slf4j-simple:$slf4jVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
 }

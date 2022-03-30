@@ -22,7 +22,7 @@ class JedisLightMap<K : Any, V : Any>(
             end
             local old_data = redis.call('HGET',KEYS[1],ARGV[1])
             redis.call('HSET',KEYS[1],ARGV[1],ARGV[2])
-            if old_data == true then
+            if old_data ~= false then
                 return old_data
             else
                 return 'LIGHT-DB-CHECK-VALUE-NOT-FOUND'
@@ -48,7 +48,7 @@ class JedisLightMap<K : Any, V : Any>(
             if redis.call('EXISTS',KEYS[1]) ~= 1 then
                 return 'LIGHT-DB-CHECK-NOT-FOUND'
             end
-            old_data = redis.call('HGET',KEYS[1],ARGV[1])
+           local old_data = redis.call('HGET',KEYS[1],ARGV[1])
            if old_data == false then
                 redis.call('HSET',KEYS[1],ARGV[1],ARGV[2])
                 return 'LIGHT-DB-CHECK-VALUE-FOUND'

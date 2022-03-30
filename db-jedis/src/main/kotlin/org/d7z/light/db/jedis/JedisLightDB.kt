@@ -6,7 +6,7 @@ import org.d7z.light.db.api.struct.MapContext
 import org.d7z.light.db.api.struct.SetContext
 import org.d7z.light.db.jedis.structs.list.JedisListContext
 import org.d7z.light.db.jedis.structs.map.JedisMapContext
-import org.d7z.objects.format.GlobalObjectFormat
+import org.d7z.light.db.jedis.structs.set.JedisSetContext
 import org.d7z.objects.format.api.IDataCovert
 import java.util.concurrent.ConcurrentHashMap
 
@@ -16,9 +16,15 @@ import java.util.concurrent.ConcurrentHashMap
 class JedisLightDB @JvmOverloads constructor(
     header: String = "",
     private val pool: LightJedisPool = LightJedisPool,
-    private val dataCovert: IDataCovert = GlobalObjectFormat,
+    private val dataCovert: IDataCovert = IDataCovert,
 ) : LightDB {
     override val name = "LightDB Jedis Support"
+
+    init {
+        pool.session {
+            it.exists("1")
+        }
+    }
 
     private val head = if (header.isBlank()) {
         ""
@@ -45,7 +51,7 @@ class JedisLightDB @JvmOverloads constructor(
 
     override fun withSet(name: String): SetContext {
         return cachedSetGroup.getOrPut(name) {
-            TODO()
+            JedisSetContext("${head}set:$name", pool, dataCovert)
         }
     }
 

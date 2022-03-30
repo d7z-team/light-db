@@ -19,7 +19,8 @@
 
 ### Redis
 
-- [ ] 预防同 key 不同 class 导致的 ClassCast 问题
+- [X] 操作原子性
+- [ ] ~~预防同 key 不同 class 导致的 ClassCast 问题~~
 
 ### Module
 

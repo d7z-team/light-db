@@ -16,11 +16,11 @@ class MemLightSet<V : Any>(
     }
 
     override fun add(data: V): Boolean = execute {
-        it.data.add(data)
+        it.data.put(data, Any()) == null
     }
 
     override fun remove(data: V): Boolean = execute {
-        it.data.remove(data)
+        it.data.remove(data) != null
     }
 
     override fun contains(data: V): Boolean = execute {
@@ -28,7 +28,7 @@ class MemLightSet<V : Any>(
     }
 
     override fun values(): Iterator<V> = execute {
-        it.data.iterator().iterator()
+        it.data.keys.iterator().iterator()
     }
 
     override val size: Long

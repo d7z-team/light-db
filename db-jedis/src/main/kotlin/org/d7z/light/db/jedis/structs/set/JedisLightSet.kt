@@ -15,7 +15,7 @@ class JedisLightSet<V : Any>(
     override fun add(data: V): Boolean = pool.session {
         it.eval(
             """
-             if redis.call('EXISTS',KEYS[1]) == 1 then
+             if redis.call('EXISTS',KEYS[1]) == 0 then
                 return -1
              end
              return redis.call('SADD',KEYS[1],ARGV[1])   
@@ -31,7 +31,7 @@ class JedisLightSet<V : Any>(
     override fun remove(data: V): Boolean = pool.session {
         it.eval(
             """
-             if redis.call('EXISTS',KEYS[1]) == 1 then
+             if redis.call('EXISTS',KEYS[1]) == 0 then
                 return -1
              end
              return redis.call('SREM',KEYS[1],ARGV[1])   
@@ -47,7 +47,7 @@ class JedisLightSet<V : Any>(
     override fun contains(data: V): Boolean = pool.session {
         it.eval(
             """
-             if redis.call('EXISTS',KEYS[1]) == 1 then
+             if redis.call('EXISTS',KEYS[1]) == 0 then
                 return -1
              end
              return redis.call('SISMEMBER',KEYS[1],ARGV[1])   
