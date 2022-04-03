@@ -17,6 +17,7 @@ class JedisLightDB @JvmOverloads constructor(
     header: String = "",
     private val pool: LightJedisPool = LightJedisPool,
     private val dataCovert: IDataCovert = IDataCovert,
+    private val cache: Boolean = false,
 ) : LightDB {
     override val name = "LightDB Jedis Support"
 
@@ -38,19 +39,31 @@ class JedisLightDB @JvmOverloads constructor(
     private val cachedListGroup = ConcurrentHashMap<String, ListContext>()
 
     override fun withList(name: String): ListContext {
-        return cachedListGroup.getOrPut(name) {
+        return if (cache) {
+            cachedListGroup.getOrPut(name) {
+                JedisListContext("${head}list:$name", pool, dataCovert)
+            }
+        } else {
             JedisListContext("${head}list:$name", pool, dataCovert)
         }
     }
 
     override fun withMap(name: String): MapContext {
-        return cachedMapGroup.getOrPut(name) {
+        return if (cache) {
+            cachedMapGroup.getOrPut(name) {
+                JedisMapContext("${head}map:$name", pool, dataCovert)
+            }
+        } else {
             JedisMapContext("${head}map:$name", pool, dataCovert)
         }
     }
 
     override fun withSet(name: String): SetContext {
-        return cachedSetGroup.getOrPut(name) {
+        return if (cache) {
+            cachedSetGroup.getOrPut(name) {
+                JedisSetContext("${head}set:$name", pool, dataCovert)
+            }
+        } else {
             JedisSetContext("${head}set:$name", pool, dataCovert)
         }
     }
