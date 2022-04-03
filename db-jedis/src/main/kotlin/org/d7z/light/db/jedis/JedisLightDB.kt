@@ -11,10 +11,16 @@ import org.d7z.objects.format.api.IDataCovert
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * LightDB Jedis Support
+ *
+ * 基于 Jedis 实现的 LightDB
+ *
+ * @property pool LightJedisPool jedis 连接池抽象
+ * @property dataCovert IDataCovert 对象转换接口
+ * @property cache Boolean 开启 context 缓存
+ * @constructor
  */
 class JedisLightDB @JvmOverloads constructor(
-    header: String = "",
+    header: String = "", // 会话存储到 jedis 时的命名空间
     private val pool: LightJedisPool = LightJedisPool,
     private val dataCovert: IDataCovert = IDataCovert,
     private val cache: Boolean = false,

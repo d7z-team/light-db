@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.d7z.light.db.spring.boot.LightDBAutoConfiguration
