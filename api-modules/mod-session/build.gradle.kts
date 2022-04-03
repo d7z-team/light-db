@@ -20,8 +20,9 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     implementation(project(":db-api"))
-    api("com.github.d7z-team.object-format:format-all:$objectFormat")
+    api("com.github.d7z-team.object-format:format-core:$objectFormat")
     implementation(project(":db-jedis"))
+    testImplementation("com.github.d7z-team.object-format:format-extra-gson:$objectFormat")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.8.2")
 }
@@ -30,9 +31,6 @@ tasks.test {
     useJUnitPlatform()
     testLogging {
         events("passed", "skipped", "failed")
-    }
-    if (System.getenv("JEDIS_PASSWORD") == null) {
-        this.environment["JEDIS_PASSWORD"] = "redis-password"
     }
 }
 

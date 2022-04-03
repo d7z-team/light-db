@@ -24,7 +24,7 @@ dependencies {
         exclude("org.slf4j", "slf4j-api")
     }
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
-    api("com.github.d7z-team.object-format:format-all:$objectFormat")
+    api("com.github.d7z-team.object-format:format-core:$objectFormat")
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
     api(project(":db-api"))
@@ -36,9 +36,6 @@ tasks.test {
     useJUnitPlatform()
     testLogging {
         events("passed", "skipped", "failed")
-    }
-    if (System.getenv("JEDIS_PASSWORD") == null) {
-        this.environment["JEDIS_PASSWORD"] = "redis-password"
     }
 }
 
