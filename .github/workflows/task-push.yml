@@ -9,24 +9,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: 'Set up JDK'
+      - name: '配置JDK环境'
         uses: actions/setup-java@v2
         with:
           java-version: 11
           distribution: 'temurin'
-      - name: 'Initialize Environment'
+      - name: '配置依赖环境'
         run: |
           mkdir -p ~/.gradle
           echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
-      - name: 'Download Gradle'
+          sudo apt update
+          sudo apt install redis-server -y
+          sudo /etc/init.d/redis-server start
+      - name: '配置编译环境'
         run: |
           chmod +x ./gradlew
           ./gradlew tasks
-      - name: 'Build Project'
+      - name: '编译项目'
         run: |
           chmod +x ./gradlew
           ./gradlew clean build -x test
-      - name: 'Test Project'
+      - name: '测试项目'
         run: |
           chmod +x ./gradlew
           ./gradlew clean test
