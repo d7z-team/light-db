@@ -1,26 +1,32 @@
-name: LightDB CI
-
 on:
   push:
     branches:
       - main
   release:
     types: [ published, created, edited ]
-permissions:
-  packages: write
-
 jobs:
-  build:
+  build-project:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 11
+      - name: 'Set up JDK'
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
-          distribution: 'adopt'
-      - name: install depends
-        run: sudo apt update && sudo apt install redis-server -y && sudo /etc/init.d/redis-server start
-      - name: Test with Gradle
-        run: chmod +x gradlew && ./gradlew clean test
+          java-version: 11
+          distribution: 'temurin'
+      - name: 'Initialize Environment'
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+      - name: 'Download Gradle'
+        run: |
+          chmod +x ./gradlew
+          ./gradlew tasks
+      - name: 'Build Project'
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build -x test
+      - name: 'Test Project'
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean test
