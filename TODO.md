@@ -4,7 +4,7 @@
 
 - [X] 基于 [`JVM Memory`](#Memory) 实现
 - [X] 基于 [`Redis/Jedis`](#Redis) 实现
-- [ ] 基于 `Redis/Spring RedisTempate` 实现
+- [ ] ~~基于 `Redis/Spring RedisTempate` 实现~~
 - [ ] 基于 `MySQL/MariaDB` 实现
 - [ ] 异步 API 实现
 

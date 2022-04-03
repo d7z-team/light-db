@@ -30,6 +30,9 @@ implementation("com.github.d7z-team.light-db:db-jedis")
 
 ## 更新日志
 
+- [0.4.0](https://github.com/d7z-team/light-db/releases/tag/0.4.0) 新增 Spring Boot 支持
+  - 新增 Spring Boot Starter ，兼容 2.6.x 及以上版本
+
 - [0.3.0](https://github.com/d7z-team/light-db/releases/tag/0.3.0) 重构 API，**与 0.2.0 不兼容**
   - api: 增加设置过期时间的 API，移除旧的 SPI 加载器
   - memory: 重构 API
