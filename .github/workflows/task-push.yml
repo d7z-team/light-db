@@ -1,3 +1,4 @@
+name: '项目集成测试'
 on:
   push:
     branches:
