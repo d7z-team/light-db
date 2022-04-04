@@ -1,0 +1,75 @@
+{
+  "properties": [
+    {
+      "name": "spring.data.light-db.mode",
+      "type": "org.d7z.light.db.spring.boot.LightDBConfigurationProperties$LightDBMode",
+      "description": "LightDB 工作模式",
+      "defaultValue": "memory"
+    },
+    {
+      "name": "spring.data.light-db.memory.refreshTime",
+      "type": "java.lang.Long",
+      "description": "内部数据刷新时间",
+      "defaultValue": 60
+    },
+    {
+      "name": "spring.data.light-db.jedis.maxIdle",
+      "type": "java.lang.Integer",
+      "description": "Jedis 配置 maxIdle",
+      "default": 8
+    },
+    {
+      "name": "spring.data.light-db.jedis.maxTotal",
+      "type": "java.lang.Integer",
+      "description": "Jedis 配置 maxTotal",
+      "default": 8
+    },
+    {
+      "name": "spring.data.light-db.jedis.minIdle",
+      "type": "java.lang.Integer",
+      "description": "Jedis 配置 minIdle",
+      "default": 0
+    },
+    {
+      "name": "spring.data.light-db.jedis.port",
+      "type": "java.lang.Integer",
+      "description": "redis 服务器端口",
+      "default": 6379
+    },
+    {
+      "name": "spring.data.light-db.jedis.host",
+      "type": "java.lang.String",
+      "description": "redis 服务器地址",
+      "default": "127.0.0.1"
+    },
+    {
+      "name": "spring.data.light-db.jedis.password",
+      "type": "java.lang.String",
+      "description": "redis 服务器密码"
+    },
+    {
+      "name": "spring.data.light-db.jedis.timeout",
+      "type": "java.lang.Integer",
+      "description": "redis 服务器连接过期时间",
+      "default": 2000
+    },
+    {
+      "name": "spring.data.light-db.jedis.db",
+      "type": "java.lang.Integer",
+      "description": "redis 服务器连接数据库",
+      "default": 0
+    },
+    {
+      "name": "spring.data.light-db.jedis.contextCache",
+      "type": "java.lang.Boolean",
+      "description": "LightDB Jedis 模块 开启 context 缓存",
+      "default": false
+    },
+    {
+      "name": "spring.data.light-db.jedis.namespace",
+      "type": "java.lang.String",
+      "description": "LightDB Jedis 模块配置全局命名空间",
+      "default": ""
+    }
+  ]
+}

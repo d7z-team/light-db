@@ -9,6 +9,10 @@ plugins {
     kotlin("jvm")
     `maven-publish`
 }
+tasks.named("compileKotlin") {
+    inputs.files(tasks.named("processResources"))
+}
+
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 dependencies {
@@ -23,6 +27,7 @@ dependencies {
     implementation("com.github.d7z-team.object-format", "format-extra-jackson")
     implementation("com.github.d7z-team.object-format", "format-spring-boot-starter")
     api("org.springframework.boot", "spring-boot-autoconfigure", springBootVersion)
+    compileOnly("org.slf4j", "slf4j-api", "1.7.32")
     annotationProcessor("org.springframework.boot", "spring-boot-configuration-processor", springBootVersion)
     testImplementation("org.springframework.boot", "spring-boot-starter-test", springBootVersion)
     testImplementation("org.springframework.boot", "spring-boot-starter-webflux", springBootVersion)
