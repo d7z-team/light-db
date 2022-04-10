@@ -40,5 +40,5 @@ jobs:
           TOKEN: ${{ secrets.m2_snap_key }}
         run: |
           chmod +x ./gradlew
-          ./gradlew publishAllPublicationsToSnapshotsRepoRepository -Pversion=-SNAPSHOT
-          ./gradlew publishAllPublicationsToReleasesRepoRepository -Pversion=${{ steps.vars.outputs.sha_short }}
+          ./gradlew publishAllPublicationsToSnapshotsRepoRepository -Pversion=latest
+          ./gradlew publishAllPublicationsToSnapshotsRepoRepository -Pversion=${{ steps.vars.outputs.sha_short }}
