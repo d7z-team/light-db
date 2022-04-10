@@ -3,7 +3,7 @@
 <a href="https://github.com/d7z-team/light-db" target="_blank"><img alt="Jenkins" src="https://github.com/d7z-team/light-db/actions/workflows/task-push.yml/badge.svg?branch=main&color=green&style=flat-square"/></a>
 <a href="LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/d7z-team/light-db"></a>
 <a href="https://jitpack.io/#d7z-team/light-db" target="_blank"> <img alt="JitPack" src="https://img.shields.io/jitpack/v/github/d7z-team/light-db"></a>
-
+<a href="https://jitpack.io/#d7z-team/light-db" target="_blank"> <img alt="JitPack" src="https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo.open-edgn.cn%2Fmaven%2Fcom%2Fgithub%2Fd7z-team%2Flight-db%2Fbom%2Fmaven-metadata.xml&color=red&style=flat"></a>
 
 > LightDB 是一套轻量级数据缓存模块.
 
