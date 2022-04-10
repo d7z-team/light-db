@@ -1,0 +1,44 @@
+name: 'Github Package Push'
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [ published, created, edited ]
+
+jobs:
+  build-project:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: '配置JDK环境'
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: 'temurin'
+      - name: '配置依赖环境'
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+          sudo apt update
+          sudo apt install redis-server -y
+          sudo /etc/init.d/redis-server start
+      - name: '加载配置信息'
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: '配置编译环境'
+        run: |
+          chmod +x ./gradlew
+          ./gradlew tasks
+      - name: '编译项目'
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build test
+      - name: '推送快照'
+        env:
+          USERNAME: ${{ secrets.m2_snap_user }}
+          TOKEN: ${{ secrets.m2_snap_key }}
+        run: |
+          chmod +x ./gradlew
+          ./gradlew publishAllPublicationsToSnapshotsRepoRepository -Pversion=-SNAPSHOT
+          ./gradlew publishAllPublicationsToReleasesRepoRepository -Pversion=${{ steps.vars.outputs.sha_short }}
