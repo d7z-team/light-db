@@ -25,7 +25,5 @@ publishing {
             version = rootProject.version.toString()
         }
     }
-    repositories {
-        mavenLocal()
-    }
+    includeRepositories(project)
 }
