@@ -5,6 +5,8 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
+        maven("https://m2.open-edgn.cn/repository/maven-snapshots/")
+        maven("https://m2.open-edgn.cn/repository/maven-releases/")
         maven { url = project.uri("https://jitpack.io") }
     }
 
@@ -17,6 +19,8 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        maven("https://m2.open-edgn.cn/repository/maven-snapshots/")
+        maven("https://m2.open-edgn.cn/repository/maven-releases/")
         maven { url = project.uri("https://jitpack.io") }
     }
 }

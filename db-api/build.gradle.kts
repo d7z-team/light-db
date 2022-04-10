@@ -45,7 +45,5 @@ publishing {
             artifact(sourcesJar.get())
         }
     }
-    repositories {
-        mavenLocal()
-    }
+    includeRepositories(project)
 }
